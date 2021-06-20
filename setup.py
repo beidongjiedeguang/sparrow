@@ -3,9 +3,13 @@
 from __future__ import print_function
 from setuptools import setup, find_packages
 from glob import glob
+import os
 from sparrow.file_ops import yaml_load
 
-version_config = yaml_load("version-config.yaml")
+pkgname = "sparrow-tool"
+pkgdir = "sparrow"
+
+version_config = yaml_load(os.path.join(pkgdir, "version-config.yaml"))
 name, version = version_config['name'], version_config['version']
 
 with open(glob('requirements.txt')[0], encoding='utf-8') as f:
@@ -18,7 +22,7 @@ with open("README.md", "r", encoding='utf-8') as fr:
 setup(name=name,
       version=version,
       package_data={
-          'sparrow': [
+          pkgdir: [
               '*.yaml', '*.yml',
           ],
       },
