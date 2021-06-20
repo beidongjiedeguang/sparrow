@@ -37,6 +37,11 @@ def path(string: str) -> str:
         return string
 
 
+def ppath(string, file=__file__) -> str:
+    """Path in package"""
+    return path(os.path.join(os.path.dirname(file), string))
+
+
 def save(filename, file):
     with open(filename, 'wb') as fw:
         pickle.dump(file, fw)
