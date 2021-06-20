@@ -1,4 +1,4 @@
-from .color_str import rgb_str
+from .color_str import rgb_string, GREEN
 from functools import wraps, partial
 import logging
 import time
@@ -15,7 +15,10 @@ def runtime(times=10):
                 func(*args, **kwargs)
             end = time.time()
             average_cost_time = (end-start)/times
-            print(f"Run {rgb_str(str(times), )} times, the average time is {average_cost_time:.3f} seconds.")
+            time_str = f"{average_cost_time:.3f}"
+
+            print(f"Run {rgb_string(str(times), GREEN)} times, "
+                  f"the average time is {rgb_string(time_str, GREEN)} seconds.")
             return func(*args, **kwargs)
         return wrapper
     return decorate
