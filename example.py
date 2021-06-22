@@ -1,20 +1,38 @@
+import logging
+
 from sparrow.version_ops import VersionControl
-from sparrow.color_str import rgb_string, YELLOW, GREEN
-from sparrow.decorator import runtime
+from sparrow.color_str import *
+from sparrow.core import *
+from sparrow.decorator import *
+from sparrow.time import *
 import time
 # vc = VersionControl("sparrow-tool")
 # vc.update_version(1)
 
-print(rgb_string("hello rgb string", YELLOW))
 
-
-@runtime(10)
+# @repeat(10)
+@runtime
+@optional_debug
+@broadcast
 def function(n):
     s = n
     time.sleep(0.1)
     return s
 
 if __name__ == "__main__":
-    print(rgb_string("hello rgb string", GREEN))
-    print(rgb_string("hello rgb string", [1., 1., 1.]))
-    function(5)
+    # print(rgb_string("hello rgb string", YELLOW))
+    # print(rgb_string("hello rgb string", GREEN))
+    # print(rgb_string("hello rgb string", [1., 1., 1.]))
+    # print(function(300, 23, 432, debug=True))
+    print(function(200))
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    # 声明了一个 Logger 对象
+    logger = logging.getLogger(__name__)
+
+    logger.info("Start print log")
+    logger.debug("Do something")
+    logger.warning("Something maybe fail.")
+    logger.info("Finish")
+    # print(inspect.signature(function))
+    # bj = Beijing()
+    # print(bj.now)
