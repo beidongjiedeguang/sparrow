@@ -37,7 +37,6 @@ setup(name=name,
       classifiers=[
           'Operating System :: OS Independent',
           'Intended Audience :: Developers',
-          'Intended Audience :: Science/Research',
           'Topic :: Scientific/Engineering :: Artificial Intelligence',
           "Programming Language :: Python :: 3",
           "Programming Language :: Python :: 3.7",
@@ -45,7 +44,7 @@ setup(name=name,
           "Programming Language :: Python :: 3.9",
       ],
       keywords=[
-          'Computer Vision', 'Mathematics', 'Physics', 'Machine Learning', 'Neural Networks',
+          'Tools', 'Mathematics', 'Machine Learning',
       ],
       packages=find_packages()
       )
