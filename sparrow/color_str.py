@@ -8,7 +8,7 @@ OSC = '\033]'
 OFF = CSI + '0m'
 
 
-def _set_rgb(RGB_fore=[240, 85, 85], SRG=0, RGB_back=None):
+def __set_rgb(RGB_fore=[240, 85, 85], SRG=0, RGB_back=None):
     """Get foreground or background color chars
     see https://my.oschina.net/dingdayu/blog/1537064
     inputs:
@@ -33,10 +33,15 @@ def _set_rgb(RGB_fore=[240, 85, 85], SRG=0, RGB_back=None):
 
 
 def _rgb_str(string, RGB_fore=[240, 85, 85], SRG=0, RGB_back=None):
-    return _set_rgb(RGB_fore, SRG, RGB_back) + string + OFF
+    return __set_rgb(RGB_fore, SRG, RGB_back) + string + OFF
 
 
 def rgb_string(string, color=RED, **kwargs):
+    """Return the string with color.
+    :arg color: can be rgb list [255, 255, 255]  or hex string "#ffffff".
+    :arg `SRG`, `RGB_back` see function `__set_grb()`
+    """
+
     if isinstance(color, str):
         RGB = [int(i) for i in 255*hex_to_rgb(color)]
     elif isinstance(color, (list, tuple, np.array)):
