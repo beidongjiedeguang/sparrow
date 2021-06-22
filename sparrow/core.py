@@ -3,7 +3,18 @@ from functools import wraps
 import numpy as np
 
 
-def broadcast(func):  # It can be replaced by `np.vectorize`
+def broadcast(func):
+    """Only for functions with a single argument"""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        value_list = []
+        for arg in args:
+            value_list.append(func(arg, **kwargs))
+        return tuple(value_list)
+    return wrapper
+
+
+def _old_broadcast(func):  # It can be replaced by `np.vectorize`
     """
         example:
         @broadcast
@@ -17,9 +28,8 @@ def broadcast(func):  # It can be replaced by `np.vectorize`
         >> f([2,4,10])
         >> array([1, 3, 832040], dtype=object)
     """
-
     @wraps(func)
-    def wrap(*args, **kwargs):
+    def wrapper(*args, **kwargs):
         """
         Takes an arbitrary Python function and returns a NumPy ufunc
         Can be used, for example, to add broadcasting to a built-in Python function
@@ -29,8 +39,7 @@ def broadcast(func):  # It can be replaced by `np.vectorize`
         """
         nin, nout = len(args) + len(kwargs), 1
         return np.frompyfunc(func, nin, nout)(*args, **kwargs)
-
-    return wrap
+    return wrapper
 
 
 class _Dict_enhance(dict):
@@ -73,22 +82,6 @@ class Const:
             self.__dict__[name] = value
 
 
-def index_char(L=1000):
-    """
-    Get the index of all characters.
-    use chr()
-    """
-    index_token = {}
-    token = []
-    for i in range(L):
-        character = chr(i)
-        index_token[i] = character
-        token.append(character)
-    token_index = dict(zip(token,
-                           range(L)))  # token_index[idx] equal to ord(idx)
-    return index_token, token_index
-
-
 # Enables the dictionary to be dot operated
 class _Dict_enhance(dict):
     def __init__(self, *args, **kwargs):
@@ -112,7 +105,7 @@ def dict_dotable(dic):
     return dic
 
 
-def get_number_digits(number):
+def number_digits(number):
     res = number
     digit = 1
     if res >= 1:
@@ -127,12 +120,12 @@ def get_number_digits(number):
     return digit
 
 
-def get_digits(number_like):
+def num_digits(number_like):
     number_str = str(int(str(number_like)))
     return len(number_str)
 
 
-def sort_count(lis):
+def sort_count(_list: list):
     """
     返回lis的由大到小排序好的元素列表
     Example:
@@ -140,7 +133,7 @@ def sort_count(lis):
     sort_count(l) : [(2, 4), (5, 2), (9, 2), (3, 1)]
     # return [2, 5, 9,3], [4, 2, 2, 1]
     """
-    a = Counter(lis)
+    a = Counter(_list)
     b = sorted(a.items(), key=lambda item: item[1], reverse=True)
     # idx, counts = [b[i][0] for i in range(len(b))], [b[i][1] for i in range(len(b))]
     return b
