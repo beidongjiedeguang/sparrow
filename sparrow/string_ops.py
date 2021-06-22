@@ -6,6 +6,35 @@ def find_all_index(pattern, string, flags=0):
     return [i.span() for i in re.finditer(pattern, string, flags=flags)]
 
 
+def string_add(string: str, dx=1):
+    # count_points = string.count('.')
+    items = find_all_index(r"\.", string)
+    number_list = [i for i in string.split('.')]
+    number_str = "".join(number_list)
+    number_len = len(number_str)
+    number = int(number_str)
+    number += dx
+    new_number_str = f"{number:0>{number_len}d}"
+    new_number_list = list(new_number_str)
+    [new_number_list.insert(idx[0], ".") for idx in items]
+    return "".join(new_number_list)
+
+
+def index_char(L=1000):
+    """
+    Get the index of all characters.
+    use chr()
+    """
+    index_token = {}
+    token = []
+    for i in range(L):
+        character = chr(i)
+        index_token[i] = character
+        token.append(character)
+    token_index = dict(zip(token, range(L)))  # token_index[idx] equal to ord(idx)
+    return index_token, token_index
+
+
 def find_match(start, end, S, flag=0):
     """find the string between `start` and `end` of `S`
     flag=0 defaults, means no special specification
@@ -27,17 +56,3 @@ def find_match(start, end, S, flag=0):
 def find_match2(pattern, S, flag=0):
     res = re.search(pattern, S, flags=flag)
     return res.group()
-
-
-def string_add(string: str, dx=1):
-    # count_points = string.count('.')
-    items = find_all_index(r"\.", string)
-    number_list = [i for i in string.split('.')]
-    number_str = "".join(number_list)
-    number_len = len(number_str)
-    number = int(number_str)
-    number += dx
-    new_number_str = f"{number:0>{number_len}d}"
-    new_number_list = list(new_number_str)
-    [new_number_list.insert(idx[0], ".") for idx in items]
-    return "".join(new_number_list)
