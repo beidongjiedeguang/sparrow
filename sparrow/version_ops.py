@@ -1,7 +1,7 @@
 import os
 
 from .file_ops import yaml_load, yaml_dump
-from .string import string_add
+from .string_ops import string_add
 
 
 class VersionControl:
@@ -47,7 +47,7 @@ class VersionControl:
     def clean_config_file(self):
         os.remove(self._config_path)
 
-    def update_readme_require(self, readme_path="README.md",
+    def update_readme(self, readme_path="README.md",
                       requirements_path="requirements.txt",
                       license="GNU_GPL--v3",
                       author="kunyuan",
@@ -63,7 +63,7 @@ class VersionControl:
 [![image](https://img.shields.io/badge/author-{author}-orange.svg?style=flat-square&logo=appveyor)](https://github.com/beidongjiedeguang)
 
 ## Requirements
-```bash
+```python
 {requirements}
 ```
 
