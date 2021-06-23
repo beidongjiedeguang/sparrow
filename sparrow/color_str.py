@@ -1,6 +1,4 @@
-import numpy as np
-
-from .color import hex_to_rgb
+from .color import color_to_int_rgb
 from .constant import *
 
 CSI = '\033['
@@ -8,7 +6,7 @@ OSC = '\033]'
 OFF = CSI + '0m'
 
 
-def __set_rgb(RGB_fore=[240, 85, 85], SRG=0, RGB_back=None):
+def __set_rgb(RGB_fore=(240, 85, 85), SRG=0, RGB_back=None):
     """Get foreground or background color chars
     see https://my.oschina.net/dingdayu/blog/1537064
     inputs:
@@ -32,27 +30,19 @@ def __set_rgb(RGB_fore=[240, 85, 85], SRG=0, RGB_back=None):
     return Fore_color + Back_color
 
 
-def _rgb_str(string, RGB_fore=[240, 85, 85], SRG=0, RGB_back=None):
+def _rgb_str(string, RGB_fore=(240, 85, 85), SRG=0, RGB_back=None):
     return __set_rgb(RGB_fore, SRG, RGB_back) + string + OFF
 
 
 def rgb_string(string, color=RED, **kwargs):
     """Return the string with color.
-    :arg color: can be rgb list [255, 255, 255]  or hex string "#ffffff".
-    :arg `SRG`, `RGB_back` see function `__set_grb()`
+    :param string: The string will be colored.
+    :param color: can be rgb list [255, 255, 255]  or hex string "#ffffff".
+    :param `SRG`, `RGB_back` see function `__set_grb()`
+    :return Colored string.
     """
-
-    if isinstance(color, str):
-        RGB = [int(i) for i in 255*hex_to_rgb(color)]
-    elif isinstance(color, (list, tuple, np.array)):
-        if isinstance(color[0], int):
-            RGB = color
-        elif isinstance(color[0], float):
-            print('float')
-            RGB = [int(255*i) for i in color]
-    else:
-        raise ValueError
-    return _rgb_str(string, RGB, **kwargs)
+    rgb = color_to_int_rgb(color)
+    return _rgb_str(string, rgb, **kwargs)
 
 
 

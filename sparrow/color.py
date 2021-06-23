@@ -8,8 +8,17 @@ def color_to_rgb(color):
         return hex_to_rgb(color)
     elif isinstance(color, Color):
         return np.array(color.get_rgb())
+    elif isinstance(color, (tuple, list, np.ndarray)):
+
+        if isinstance(color[0], (int, np.int32, np.int64)):
+            return np.array(color)/255
+        elif isinstance(color[0], (float, np.float32, np.float64)):
+            return np.array(color)
+        else:
+            raise Exception(f"Invalid color type: {type(color[0])}")
+
     else:
-        raise Exception("Invalid color type")
+        raise Exception(f"Invalid color type: {color}")
 
 
 def color_to_rgba(color, alpha=1):
