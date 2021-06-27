@@ -4,8 +4,8 @@ from sparrow.version_ops import VersionControl
 pkgname = "sparrow-tool"
 pkgdir = "sparrow"
 vc = VersionControl(pkgname, pkgdir, version=None)
-vc.update_readme("README.md")
 vc.update_version(1)
+vc.update_readme("README.md")
 
 rm('build', 'dist', 'eggs', 'sparrow_tool.egg-info')
 # os.system("yapf -i -r ./sparrow")
