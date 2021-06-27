@@ -65,3 +65,8 @@ def color_to_int_rgb(color):
 def color_to_int_rgba(color, opacity=1.0):
     alpha = int(255 * opacity)
     return np.array([*color_to_int_rgb(color), alpha])
+
+
+def random_color():
+    return Color(rgb=[np.random.random() for _ in range(3)])
+
