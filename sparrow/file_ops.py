@@ -15,7 +15,7 @@ def _rm(path):
         elif os.path.isdir(path):
             shutil.rmtree(path)
         else:
-            print(f'{path} is  illegal !')
+            print(f'{path} is illegal.')
 
 
 @broadcast
@@ -29,9 +29,9 @@ def rm(PATH):
 def path(string: str) -> str:
     """Adaptive to different platforms """
     platform = sys.platform.lower()
-    if 'linux' in platform:
+    if platform in ('linux', "darwin"):
         return string.replace('\\', '/')
-    elif 'win' in platform:
+    elif platform in ("win", "win32"):
         return string.replace('/', '\\')
     else:
         return string
