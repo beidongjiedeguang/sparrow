@@ -1,6 +1,6 @@
 import os
 
-from .file_ops import yaml_load, yaml_dump
+from .file_ops import yaml_load, yaml_dump, rm
 from .string_ops import string_add
 
 
@@ -74,4 +74,11 @@ class VersionControl:
 
         with open('README.md', 'w', encoding='UTF-8') as fo:
             fo.write(new_readme)
+
+    @staticmethod
+    def upload_pypi(pkgname):
+        rm('build', 'dist', 'eggs', f'{pkgname}.egg-info')
+        os.system('python setup.py sdist bdist_wheel')
+        os.system('twine upload dist/*')
+        rm('build', 'dist', 'eggs', f'{pkgname}.egg-info')
 
