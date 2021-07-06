@@ -2,3 +2,4 @@ pyyaml
 numpy
 colour
 pendulum
+twine
