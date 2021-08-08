@@ -1,5 +1,5 @@
 from .color_str import rgb_string, GREEN, RED, BLUE
-from functools import wraps, partial, update_wrapper
+from functools import wraps, update_wrapper
 import logging
 import inspect
 import time

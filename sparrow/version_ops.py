@@ -51,11 +51,11 @@ class VersionControl:
                       requirements_path="requirements.txt",
                       license="GNU_GPL--v3",
                       author="kunyuan",
-                      replace_flag=19*'-'):
+                      replace_flag=19 * '-'):
         with open(readme_path, 'r', encoding='UTF-8') as fr:
             readme = fr.read()
         with open(requirements_path, 'r', encoding="utf-8") as fr:
-           requirements = fr.read().strip("\n")
+            requirements = fr.read().strip("\n")
         replace_begin = f"""# {self._pkgname}
 [![image](https://img.shields.io/badge/Pypi-{self.config['version']}-green.svg)](https://pypi.org/project/{self._pkgname})
 [![image](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/)
@@ -72,7 +72,7 @@ class VersionControl:
         readme_list[0] = replace_begin
         new_readme = replace_flag.join(readme_list)
 
-        with open('README.md', 'w', encoding='UTF-8') as fo:
+        with open(readme_path, 'w', encoding='UTF-8') as fo:
             fo.write(new_readme)
 
     @staticmethod
@@ -81,4 +81,3 @@ class VersionControl:
         os.system('python setup.py sdist bdist_wheel')
         os.system('twine upload dist/*')
         rm('build', 'dist', 'eggs', f'{pkgname}.egg-info')
-
