@@ -81,3 +81,9 @@ class VersionControl:
         os.system('python setup.py sdist bdist_wheel')
         os.system('twine upload dist/*')
         rm('build', 'dist', 'eggs', f'{pkgname}.egg-info')
+
+    @staticmethod
+    def install(pkgname):
+        rm('build', 'dist', 'eggs', f'{pkgname}.egg-info')
+        os.system(f'pip uninstall {pkgname} -y && python setup.py install')
+        rm('build', 'dist', 'eggs', f'{pkgname}.egg-info')

@@ -4,7 +4,19 @@ from __future__ import print_function
 from setuptools import setup, find_packages
 from glob import glob
 import os
-from sparrow.file_ops import yaml_load
+
+
+def yaml_load(filepath):
+    from yaml import load
+    try:
+        from yaml import CLoader as Loader
+    except ImportError:
+        from yaml import Loader
+    with open(filepath, 'r', encoding="utf-8") as stream:
+        #     stream = stream.read()
+        content = load(stream, Loader=Loader)
+    return content
+
 
 pkgname = "sparrow-tool"
 pkgdir = "sparrow"
@@ -48,4 +60,3 @@ setup(name=name,
       ],
       packages=find_packages()
       )
-
