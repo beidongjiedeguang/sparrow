@@ -1,16 +1,30 @@
 from collections import Counter
 from functools import wraps
 import numpy as np
+import pickle
+
+
+def save_var(filename, data):
+    with open(filename, 'wb') as fw:
+        pickle.dump(data, fw)
+
+
+def load_var(filename):
+    with open(filename, 'rb') as fi:
+        data = pickle.load(fi)
+    return data
 
 
 def broadcast(func):
     """Only for functions with a single argument"""
+
     @wraps(func)
     def wrapper(*args, **kwargs):
         value_list = []
         for arg in args:
             value_list.append(func(arg, **kwargs))
         return tuple(value_list)
+
     return wrapper
 
 
@@ -28,6 +42,7 @@ def _old_broadcast(func):  # It can be replaced by `np.vectorize`
         >> f([2,4,10])
         >> array([1, 3, 832040], dtype=object)
     """
+
     @wraps(func)
     def wrapper(*args, **kwargs):
         """
@@ -39,11 +54,13 @@ def _old_broadcast(func):  # It can be replaced by `np.vectorize`
         """
         nin, nout = len(args) + len(kwargs), 1
         return np.frompyfunc(func, nin, nout)(*args, **kwargs)
+
     return wrapper
 
 
 class _Dict_enhance(dict):
     """Enables the dictionary to be dot operated"""
+
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
         self.__dict__ = self
@@ -137,3 +154,19 @@ def sort_count(_list: list):
     b = sorted(a.items(), key=lambda item: item[1], reverse=True)
     # idx, counts = [b[i][0] for i in range(len(b))], [b[i][1] for i in range(len(b))]
     return b
+
+
+def reduce_list_element(array, *elems):
+    """
+    example:
+    a = [ 5, 6, 6, 7, 8, 9, 9]
+    reduce_list_element(a, 6, 9)
+    print(a)
+    >> [ 5, 7, 8]
+    """
+    length = len(array)
+    for idx in range(length):
+        index = length - idx - 1
+        for elem in elems:
+            if array[index] == elem:
+                array.pop(index)

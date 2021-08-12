@@ -1,5 +1,5 @@
 import re
-
+import cn2an
 
 def find_all_index(pattern, string, flags=0):
     """find all matched index of string"""
