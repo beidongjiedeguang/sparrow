@@ -75,15 +75,15 @@ class VersionControl:
         with open(readme_path, 'w', encoding='UTF-8') as fo:
             fo.write(new_readme)
 
-    @staticmethod
-    def upload_pypi(pkgname):
+    def upload_pypi(self):
+        pkgname = self._pkgname
         rm('build', 'dist', 'eggs', f'{pkgname}.egg-info')
         os.system('python setup.py sdist bdist_wheel')
         os.system('twine upload dist/*')
         rm('build', 'dist', 'eggs', f'{pkgname}.egg-info')
 
-    @staticmethod
-    def install(pkgname):
+    def install(self):
+        pkgname = self._pkgname
         rm('build', 'dist', 'eggs', f'{pkgname}.egg-info')
         os.system(f'pip uninstall {pkgname} -y && python setup.py install')
         rm('build', 'dist', 'eggs', f'{pkgname}.egg-info')
