@@ -37,9 +37,9 @@ def path(string: str) -> str:
         return string
 
 
-def ppath(string, file=__file__) -> str:
+def ppath(pathname, file=__file__) -> str:
     """Path in package"""
-    return path(os.path.join(os.path.dirname(file), string))
+    return path(os.path.join(os.path.dirname(file), pathname))
 
 
 def save(filename, file):
@@ -60,7 +60,7 @@ def yaml_dump(filepath, data):
     except ImportError:
         from yaml import Dumper
     with open(filepath, "w", encoding='utf-8') as fw:
-        fw.write(dump(data, Dumper=Dumper))
+        fw.write(dump(data, Dumper=Dumper, allow_unicode=True))
 
 
 def yaml_load(filepath):
