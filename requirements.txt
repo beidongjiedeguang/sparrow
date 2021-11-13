@@ -4,3 +4,5 @@ colour
 pendulum
 twine
 cn2an
+colorlog
+concurrent-log-handler

@@ -1,5 +1,5 @@
 from .file_ops import yaml_load, yaml_dump, ppath, save, load, rm
-from .decorator import runtime
+from .decorator import benchmark
 from .color_str import rgb_string
 
 

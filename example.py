@@ -1,5 +1,5 @@
 import logging
-
+import numpy as np
 from sparrow.version_ops import VersionControl
 from sparrow.color_str import *
 from sparrow.core import *
@@ -11,7 +11,7 @@ import time
 
 
 # @repeat(10)
-@runtime
+@benchmark
 @optional_debug
 @broadcast
 def function(n):
