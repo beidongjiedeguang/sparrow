@@ -48,7 +48,7 @@ class Logger(metaclass=MetaSingleton):
 
     def debug(self, msg, *args, **kwargs):
         currentframe = inspect.currentframe()
-        msg = self.get_format_msg(currentframe, msg)
+        msg = self.get_format_msg(currentframe, msg, "DEBUG")
         if self._level <= logging.DEBUG:
             self._debug_logger.debug(msg, *args, **kwargs)
 
