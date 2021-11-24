@@ -1,6 +1,14 @@
 from pathlib import Path
+import inspect
 
 
-def path_rel_to_abs(rel_path, file_path=__file__):
-    current_dir = Path(file_path).absolute().parent
-    return current_dir.joinpath(rel_path)
+def rel_to_abs(rel_path: str):
+    """Return absolute path relative to the called file """
+    currentframe = inspect.currentframe()
+    f = currentframe.f_back
+    current_path = Path(f.f_code.co_filename).parent
+    return current_path / rel_path
+
+
+if __name__ == "__main__":
+    print(rel_to_abs("../emmm"))
