@@ -1,6 +1,7 @@
 from collections import Counter
 from functools import wraps
 import pickle
+import numpy as np
 
 
 def save_var(filename, data):
@@ -12,6 +13,18 @@ def load_var(filename):
     with open(filename, 'rb') as fi:
         data = pickle.load(fi)
     return data
+
+
+def clamp(x, x_min, x_max):
+    """ Clamp a number to same range.
+    It's equivalent to np.clip()
+    Examples:
+        >>> clamp(-1, 0, 1)
+        >>> 0
+        >>> clamp([-1, 2, 3], [0, 0, 0], [1, 1, 1])
+        >>> [0, 1, 1]
+    """
+    return np.maximum(x_min, np.minimum(x_max, x))
 
 
 def broadcast(func):  # It can be replaced by `np.vectorize`

@@ -60,7 +60,7 @@ def yaml_dump(filepath, data):
     except ImportError:
         from yaml import Dumper
     with open(filepath, "w", encoding='utf-8') as fw:
-        fw.write(dump(data, Dumper=Dumper, allow_unicode=True))
+        fw.write(dump(data, Dumper=Dumper, allow_unicode=True, indent=4))
 
 
 def yaml_load(filepath):

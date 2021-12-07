@@ -5,6 +5,7 @@ import os
 import inspect
 from pathlib import Path
 from functools import wraps
+import datetime
 from ..decorators.core import MetaSingleton
 
 
@@ -20,8 +21,14 @@ class Logger(metaclass=MetaSingleton):
                  print_warning=False,
                  print_error=False,
                  single_mode=False,
-                 level=logging.DEBUG
+                 level=logging.DEBUG,
+                 tz='origin'
                  ):
+        """
+        Parameters
+        ----------
+            tz: time zone, to point china time zone you can use options: 'zh','ch','shanghai','beijing'。
+        """
         self.colors_config = {
             'DEBUG': 'white',
             'INFO': 'cyan',
@@ -29,6 +36,10 @@ class Logger(metaclass=MetaSingleton):
             'ERROR': 'red',
             'CRITICAL': 'bold_red',
         }
+
+        if tz.lower() in ("zh", "ch", "shanghai", 'beijing'):
+            logging.Formatter.converter = lambda sec, what: \
+                (datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(hours=8)).timetuple()
         debug_path = Path(log_dir).joinpath(debug_path)
         info_path = Path(log_dir).joinpath(info_path)
         warning_path = Path(log_dir).joinpath(warning_path)
