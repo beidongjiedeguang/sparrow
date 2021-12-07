@@ -1,6 +1,5 @@
-from .color.color import color_to_int_rgb
-from .color.constant import *
-from deprecated import deprecated
+from .color import color_to_int_rgb
+from .constant import *
 import warnings
 
 CSI = '\033['
@@ -36,7 +35,6 @@ def _rgb_str(string, RGB_fore=(240, 85, 85), SRG=0, RGB_back=None):
     return __set_rgb(RGB_fore, SRG, RGB_back) + string + OFF
 
 
-@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.color.color_str` instead.")
 def rgb_string(string, color=RED, **kwargs):
     """Return the string with color.
     :param string: The string will be colored.
@@ -44,7 +42,6 @@ def rgb_string(string, color=RED, **kwargs):
     :param `SRG`, `RGB_back` see function `__set_grb()`
     :return Colored string.
     """
-    warnings.warn("deprecated soon, use `sparrow.color.color_str` instead.", DeprecationWarning)
     rgb = color_to_int_rgb(color)
     return _rgb_str(string, rgb, **kwargs)
 

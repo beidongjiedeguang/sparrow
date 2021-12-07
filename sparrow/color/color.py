@@ -1,6 +1,6 @@
 from colour import Color
 import numpy as np
-from .color.constant import *
+from .constant import *
 
 
 def color_to_rgb(color):
@@ -11,11 +11,12 @@ def color_to_rgb(color):
     elif isinstance(color, (tuple, list, np.ndarray)):
 
         if isinstance(color[0], (int, np.int32, np.int64)):
-            return np.array(color) / 255
+            return np.array(color)/255
         elif isinstance(color[0], (float, np.float32, np.float64)):
             return np.array(color)
         else:
             raise Exception(f"Invalid color type: {type(color[0])}")
+
     else:
         raise Exception(f"Invalid color type: {color}")
 
@@ -68,3 +69,4 @@ def color_to_int_rgba(color, opacity=1.0):
 
 def random_color():
     return Color(rgb=[np.random.random() for _ in range(3)])
+
