@@ -94,7 +94,7 @@ class Logger(metaclass=MetaSingleton):
     def get_format_msg(currentframe, msg, level):
         filename = os.path.basename(currentframe.f_back.f_code.co_filename)
         lineno = currentframe.f_back.f_lineno
-        msg = f"[{filename}]-[line:{lineno}]-{level} >>> " + msg
+        msg = f"[{filename}]-[line:{lineno}]-{level} >>> " + str(msg)
         return msg
 
     def _get_logger(self, name, log_abs_path, level=logging.INFO, stream=True):
