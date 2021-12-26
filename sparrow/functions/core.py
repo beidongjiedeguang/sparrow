@@ -4,6 +4,12 @@ import numpy as np
 import operator as op
 
 
+def gaussian():
+    pass
+
+def gaussian_kernel():
+    pass
+
 def clamp(x, x_min, x_max):
     """ Clamp a number to same range.
     Examples:

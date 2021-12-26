@@ -7,3 +7,4 @@ cn2an
 colorlog
 concurrent-log-handler
 Deprecated
+GitPython
