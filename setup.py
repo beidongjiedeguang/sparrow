@@ -23,7 +23,7 @@ pkgdir = "sparrow"
 version_config = yaml_load(os.path.join(pkgdir, "version-config.yaml"))
 name, version = version_config['name'], version_config['version']
 setup(
-    setup_requires=['pbr>=1.9', 'setuptools>=17.1'],
+    setup_requires=['pbr>=1.9', 'setuptools>=17.1', 'pyyaml'],
     pbr=True,
     package_data={
         pkgdir: [
