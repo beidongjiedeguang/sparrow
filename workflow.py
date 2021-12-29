@@ -11,7 +11,7 @@ vc.update_readme()
 # vc.upload_pypi()
 
 repo = Repo('.')
-repo.index.add([f"{pkgdir}/", "README*.md", "requirements.txt", "workflow.py", 'setup.*'])
+repo.index.add(["README*.md", "requirements.txt", "workflow.py", 'setup.*'])
 repo.index.commit(f"[Upgrade] Version bump to [{vc.config['version']}]")
 repo.create_tag(f"{vc.config['version']}")
 remote = repo.remote()
