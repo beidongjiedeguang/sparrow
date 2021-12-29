@@ -2,13 +2,47 @@ from functools import reduce
 import inspect
 import numpy as np
 import operator as op
+import random
+import time
+
+__all__ = ["topk", "random_idx", "clamp", "get_num_args", "get_parameters"]
 
 
-def gaussian():
-    pass
+def topk(a, k, axis=-1, largest=True, sort=True):
+    a = np.asanyarray(a)
+    if axis is None:
+        axis_size = a.size
+    else:
+        axis_size = a.shape[axis]
+    assert 1 <= k <= axis_size
 
-def gaussian_kernel():
-    pass
+    if largest:
+        index_array = np.argpartition(a, axis_size - k, axis=axis)
+        topk_indices = np.take(index_array, -np.arange(k) - 1, axis=axis)
+    else:
+        index_array = np.argpartition(a, k - 1, axis=axis)
+        topk_indices = np.take(index_array, np.arange(k), axis=axis)
+    topk_values = np.take_along_axis(a, topk_indices, axis=axis)
+    if sort:
+        sorted_indices_in_topk = np.argsort(topk_values, axis=axis)
+        if largest:
+            sorted_indices_in_topk = np.flip(sorted_indices_in_topk, axis=axis)
+        sorted_topk_values = np.take_along_axis(
+            topk_values, sorted_indices_in_topk, axis=axis)
+        sorted_topk_indices = np.take_along_axis(
+            topk_indices, sorted_indices_in_topk, axis=axis)
+        return sorted_topk_values, sorted_topk_indices
+    return topk_values, topk_indices
+
+
+def random_idx(idx_range, exclude_idx=None):
+    random.seed(time.time())
+    rand_idx = random.randint(*idx_range)
+    if rand_idx == exclude_idx:
+        return random_idx(idx_range, exclude_idx)
+    else:
+        return rand_idx
+
 
 def clamp(x, x_min, x_max):
     """ Clamp a number to same range.
