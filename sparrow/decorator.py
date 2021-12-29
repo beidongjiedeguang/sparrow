@@ -5,8 +5,10 @@ import logging
 import inspect
 import time
 import types
+from deprecated import deprecated
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 class TryDecorator:
     def __init__(self, error_return=None):
         self.error_return = error_return
@@ -29,6 +31,7 @@ class TryDecorator:
             return types.MethodType(self, instance)
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 def try_decorator(error_return=None):
     def decorator(func):
         @wraps(func)
@@ -44,6 +47,7 @@ def try_decorator(error_return=None):
     return decorator
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 def test_time(times=10):
     # if func is None:
     #     return partial(time_it, times=times)
@@ -66,6 +70,7 @@ def test_time(times=10):
     return decorate
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 def benchmark(func):
     """Log the runtime of the decorated function."""
 
@@ -82,6 +87,7 @@ def benchmark(func):
     return wrapper
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 def repeat(n=2):
     """repeat decorated function `n` times."""
 
@@ -98,6 +104,7 @@ def repeat(n=2):
     return decorator
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 def optional_debug(func):
     if 'debug' in inspect.signature(func).parameters:
         raise TypeError('debug argument already defined')
@@ -125,6 +132,7 @@ def optional_debug(func):
     return wrapper
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 def count_calls(func):
     """Count the number of calls made to the decorated function. """
 
@@ -138,6 +146,7 @@ def count_calls(func):
     return wrapper
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 class CountCalls:
     """Count the number of calls made to the decorated function."""
 
@@ -152,6 +161,7 @@ class CountCalls:
         return self.func(*args, **kwargs)
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 class CallReminder:
     def __init__(self, func):
         self._func = func
@@ -166,6 +176,7 @@ class CallReminder:
         return self._num_calls
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 def logged(level, name=None, message=None):
     """
     Add logging to a function. level is the logging
@@ -189,6 +200,7 @@ def logged(level, name=None, message=None):
     return decorate
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 def singleton(cls):
     """
     Usage
@@ -207,6 +219,7 @@ def singleton(cls):
     return inner
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 class Singleton:
     """
     Usage
@@ -226,6 +239,7 @@ class Singleton:
         return self._instance[self._cls]
 
 
+@deprecated(version="0.4.0", reason="Deprecated, use `sparrow.decorators.xxx` instead.")
 class MetaSingleton(type):
     """
     Usage

@@ -1,5 +1,4 @@
-import inspect
-from ..color.color_str import rgb_string, GREEN, RED, BLUE
+from ..string.color_string import rgb_string, GREEN, RED, BLUE
 from functools import wraps, update_wrapper
 import logging
 import inspect
@@ -215,6 +214,7 @@ class Singleton:
         class Cls:
             pass
     """
+
     def __init__(self, cls):
         self._cls = cls
         self._instance = {}
