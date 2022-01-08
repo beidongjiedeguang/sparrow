@@ -1,0 +1,99 @@
+CHANGES
+=======
+
+* Update python-publish.yml
+* fix git add all file
+* remove \_\_pycache\_\_/
+* remove .ieda/
+
+0.3.6
+-----
+
+* [Upgrade] Version bump to [0.3.6]
+* [refactor]: mv files to folder
+* Add \`topK\` function
+* clean code
+
+0.3.5
+-----
+
+* [Upgrade] Version bump to [0.3.5]
+* Update python-publish.yml
+* Update python-publish.yml
+
+0.3.4
+-----
+
+* [Upgrade] Version bump to [0.3.4]
+
+0.3.3
+-----
+
+* [Upgrade] Version bump to [0.3.3]
+
+0.3.2
+-----
+
+* [Upgrade] Version bump to [0.3.2]
+
+0.3.1
+-----
+
+* [Upgrade] Version bump to [0.3.1]
+
+0.3.0
+-----
+
+* Version bump to [0.3.0]
+* use str(msg)
+* Create python-publish.yml
+* Version bump to 0.2.9
+* Version Upgrade
+* Neural network module
+* Some useful function
+* Make color independent module
+* Version Upgrade
+* fix missing required argument error
+* Put \`Logger\` in \_\_init\_\_
+* Version upgrade
+* Better function \`rel\_to\_abs\`
+* update
+* Logger support
+* Version Upgrade
+* yaml dump support unicode
+* clean code
+* update
+* version upgrade
+* some useful method
+* add try\_decorator
+* version upgrade
+* Version upgrade
+* fixed readme path
+* version upgrade
+* version upgrade
+* Fix code order
+* Upgrade
+* random color
+* add darwin
+* Optimize code structure
+* version upgrade
+* Add some funcs
+* Colorization requirments in README.md
+* Some useful decorators
+* update \`broadcast\`
+* Make the description match better
+* Add time module
+* Version upgrade
+* Annotate function \`rgb\_string()\`
+* rename strint to string\_ops
+* Remove workflow.py from .gitignore
+* Add function update\_readme
+* version upgrade
+* Color string
+* Some improvements
+* Add package path
+* Version upgrade
+* Some commonly used decorators
+* Add rbg string
+* First release
+* Initial commit
