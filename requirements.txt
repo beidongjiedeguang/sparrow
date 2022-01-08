@@ -8,3 +8,6 @@ colorlog
 concurrent-log-handler
 Deprecated
 GitPython
+fire
+uvicorn>=0.16
+fastapi[all]
