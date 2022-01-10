@@ -1,6 +1,17 @@
 CHANGES
 =======
 
+* delete all \_\_pycache\_\_/
+* Update python-publish.yml
+* version update
+
+0.3.7
+-----
+
+* [Upgrade] Version bump to [0.3.7]
+* add uvicorn & fastapi
+* update
+* Add timer widget
 * Update python-publish.yml
 * fix git add all file
 * remove \_\_pycache\_\_/
