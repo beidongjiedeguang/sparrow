@@ -9,9 +9,10 @@ import datetime
 from ..decorators.core import MetaSingleton
 
 
-class Logger(metaclass=MetaSingleton):
+class Logger:
     def __init__(self,
                  log_dir='./',
+                 name='name',
                  debug_path="debug.log",
                  info_path='info.log',
                  warning_path='warn.log',
@@ -44,18 +45,28 @@ class Logger(metaclass=MetaSingleton):
         info_path = Path(log_dir).joinpath(info_path)
         warning_path = Path(log_dir).joinpath(warning_path)
         error_path = Path(log_dir).joinpath(error_path)
-        self._debug_logger = self._get_logger("debug-inner-name", debug_path, level=logging.DEBUG, stream=print_debug)
-        self._info_logger = self._get_logger("info-inner-name", info_path, level=logging.INFO, stream=print_info)
-        self._warining_logger = self._get_logger("warning-inner-name", warning_path, level=logging.WARNING,
+
+        self._debug_logger = self._get_logger(f"debug-{name}", debug_path, level=logging.DEBUG, stream=print_debug)
+        self._info_logger = self._get_logger(f"info-{name}", info_path, level=logging.INFO, stream=print_info)
+        self._warining_logger = self._get_logger(f"warning-{name}", warning_path, level=logging.WARNING,
                                                  stream=print_warning)
-        self._error_logger = self._get_logger("error-inner-name", error_path, level=logging.ERROR, stream=print_error)
+        self._error_logger = self._get_logger(f"error-{name}", error_path, level=logging.ERROR, stream=print_error)
         self._single_mode = single_mode
         self._level = level
-
-    @classmethod
-    def getLogger(cls):
-        """Logger is singleton，this is equivalent to using Logger () directly"""
-        return cls()
+        self._param_dict = dict(
+            log_dir=log_dir,
+            debug_path=debug_path,
+            info_path=info_path,
+            warning_path=warning_path,
+            error_path=error_path,
+            print_debug=print_debug,
+            print_info=print_info,
+            print_warning=print_warning,
+            print_error=print_error,
+            single_mode=single_mode,
+            level=level,
+            tz=tz
+        )
 
     def debug(self, msg, *args, **kwargs):
         currentframe = inspect.currentframe()
@@ -112,7 +123,8 @@ class Logger(metaclass=MetaSingleton):
         log_dir = log_path.parent
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
-        logger = logging.getLogger(name)
+        # logger = logging.getLogger(name)
+        logger = logging.Logger(name, level=level)
 
         stream_formatter = colorlog.ColoredFormatter(default_formats["color_format"],
                                                      log_colors=self.colors_config,
@@ -132,7 +144,7 @@ class Logger(metaclass=MetaSingleton):
             stream_handler = logging.StreamHandler()
             stream_handler.setFormatter(stream_formatter)
             logger.addHandler(stream_handler)
-        logger.setLevel(level)
+        # logger.setLevel(level)
 
         return logger
 
@@ -152,3 +164,46 @@ def findcaller(func):
         func(*args)
 
     return wrapper
+
+
+class SingletonLogger(Logger, metaclass=MetaSingleton):
+    def __init__(self,
+                 log_dir='./',
+                 name='name',
+                 debug_path="debug.log",
+                 info_path='info.log',
+                 warning_path='warn.log',
+                 error_path='error.log',
+                 print_debug=False,
+                 print_info=False,
+                 print_warning=False,
+                 print_error=False,
+                 single_mode=False,
+                 level=logging.DEBUG,
+                 tz='origin'
+                 ):
+        super().__init__(
+            log_dir=log_dir,
+            name=name,
+            debug_path=debug_path,
+            info_path=info_path,
+            warning_path=warning_path,
+            error_path=error_path,
+            print_debug=print_debug,
+            print_info=print_info,
+            print_warning=print_warning,
+            print_error=print_error,
+            single_mode=single_mode,
+            level=level,
+            tz=tz
+        )
+
+    @classmethod
+    def getLogger(cls):
+        """Logger is singleton，this is equivalent to using Logger () directly"""
+        return cls()
+
+    def copy(self):
+        new_logger = object.__new__(Logger)
+        new_logger.__init__(**self._param_dict)
+        return new_logger
