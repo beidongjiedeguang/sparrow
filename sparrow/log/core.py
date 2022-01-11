@@ -10,6 +10,14 @@ from ..decorators.core import MetaSingleton
 
 
 class Logger:
+    """
+    Examples:
+    >>> logger = Logger(name='train-log', log_dir='./logs', print_debug=True)
+    >>> logger.debug("hello", "list", [1, 2, 3, 4, 5])
+
+    """
+    saved_loggers = {}
+
     def __init__(self,
                  log_dir='./',
                  name='name',
@@ -30,6 +38,7 @@ class Logger:
         ----------
             tz: time zone, to point china time zone you can use options: 'zh','ch','shanghai','beijing'。
         """
+
         self.colors_config = {
             'DEBUG': 'white',
             'INFO': 'cyan',
@@ -67,45 +76,53 @@ class Logger:
             level=level,
             tz=tz
         )
+        self.saved_loggers[name] = self
 
-    def debug(self, msg, *args, **kwargs):
+    @classmethod
+    def get_logger(cls, name):
+        if name in cls.saved_loggers:
+            return cls.saved_loggers[name]
+
+    def debug(self, *msg, sep=' ', **kwargs):
         currentframe = inspect.currentframe()
-        msg = self.get_format_msg(currentframe, msg, "DEBUG")
+        msg = self.get_format_msg(currentframe, msg, "DEBUG", sep=sep)
         if self._level <= logging.DEBUG:
-            self._debug_logger.debug(msg, *args, **kwargs)
+            self._debug_logger.debug(msg, **kwargs)
 
-    def info(self, msg, *args, **kwargs):
+    def info(self, *msg, sep=' ', **kwargs):
         currentframe = inspect.currentframe()
-        msg = self.get_format_msg(currentframe, msg, "INFO")
+        msg = self.get_format_msg(currentframe, msg, "INFO", sep=sep)
         if self._level <= logging.INFO:
-            self._info_logger.info(msg, *args, **kwargs)
+            self._info_logger.info(msg, **kwargs)
             if not self._single_mode:
-                self._debug_logger.info(msg, *args, **kwargs)
+                self._debug_logger.info(msg, **kwargs)
 
-    def warning(self, msg, *args, **kwargs):
+    def warning(self, *msg, sep=' ', **kwargs):
         currentframe = inspect.currentframe()
-        msg = self.get_format_msg(currentframe, msg, "WARNING")
+        msg = self.get_format_msg(currentframe, msg, "WARNING", sep=sep)
         if self._level <= logging.WARNING:
-            self._warining_logger.warning(msg, *args, **kwargs)
+            self._warining_logger.warning(msg, **kwargs)
             if not self._single_mode:
-                self._debug_logger.warning(msg, *args, **kwargs)
-                self._info_logger.warning(msg, *args, **kwargs)
+                self._debug_logger.warning(msg, **kwargs)
+                self._info_logger.warning(msg, **kwargs)
 
-    def error(self, msg, *args, **kwargs):
+    def error(self, *msg, sep=' ', **kwargs):
         currentframe = inspect.currentframe()
-        msg = self.get_format_msg(currentframe, msg, "ERROR")
+        msg = self.get_format_msg(currentframe, msg, "ERROR", sep=sep)
         if self._level <= logging.ERROR:
-            self._error_logger.error(msg, *args, **kwargs)
+            self._error_logger.error(msg, **kwargs)
             if not self._single_mode:
-                self._debug_logger.error(msg, *args, **kwargs)
-                self._info_logger.error(msg, *args, **kwargs)
-                self._warining_logger.error(msg, *args, **kwargs)
+                self._debug_logger.error(msg, **kwargs)
+                self._info_logger.error(msg, **kwargs)
+                self._warining_logger.error(msg, **kwargs)
 
     @staticmethod
-    def get_format_msg(currentframe, msg, level):
+    def get_format_msg(currentframe, msg: tuple, level, sep=" "):
         filename = os.path.basename(currentframe.f_back.f_code.co_filename)
         lineno = currentframe.f_back.f_lineno
-        msg = f"[{filename}]-[line:{lineno}]-{level} >>> " + str(msg)
+        msg_list = [str(i) for i in msg]
+        msg = sep.join(msg_list)
+        msg = f"[{filename}]-[line:{lineno}]-{level} >>> " + msg
         return msg
 
     def _get_logger(self, name, log_abs_path, level=logging.INFO, stream=True):
