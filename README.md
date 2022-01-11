@@ -28,4 +28,16 @@ pip install sparrow-tool
 ```
 
 ## Usage
-TODO
+
+### Safe logger in `multiprocessing`
+```python
+from sparrow.log import Logger
+import numpy as np
+logger = Logger(name='train-log', log_dir='./logs', )
+logger.info("hello","numpy:",np.arange(10))
+
+logger2 = Logger.get_logger('train-log')
+print(id(logger2) == id(logger))
+>>> True
+```
+

@@ -1,6 +1,17 @@
 CHANGES
 =======
 
+0.3.9
+-----
+
+* [Upgrade] Version bump to [0.3.9]
+* fix log module
+
+0.3.8
+-----
+
+* [Upgrade] Version bump to [0.3.8]
+* Fix requrements install error
 * delete all \_\_pycache\_\_/
 * Update python-publish.yml
 * version update
