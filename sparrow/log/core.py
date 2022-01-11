@@ -12,11 +12,15 @@ from ..decorators.core import MetaSingleton
 class Logger:
     """
     Examples:
-    >>> logger = Logger(name='train-log', log_dir='./logs', print_debug=True)
-    >>> logger.debug("hello", "list", [1, 2, 3, 4, 5])
+        >>> logger = Logger(name='train-log', log_dir='./logs', print_debug=True)
+        >>> logger.debug("hello", "list", [1, 2, 3, 4, 5])
+
+        >>> logger2 = Logger.get_logger('train-log')
+        >>> id(logger2) == id(logger)
+        True
 
     """
-    saved_loggers = {}
+    _saved_loggers = {}
 
     def __init__(self,
                  log_dir='./',
@@ -39,7 +43,7 @@ class Logger:
             tz: time zone, to point china time zone you can use options: 'zh','ch','shanghai','beijing'。
         """
 
-        self.colors_config = {
+        self._colors_config = {
             'DEBUG': 'white',
             'INFO': 'cyan',
             'WARNING': 'yellow',
@@ -55,11 +59,13 @@ class Logger:
         warning_path = Path(log_dir).joinpath(warning_path)
         error_path = Path(log_dir).joinpath(error_path)
 
-        self._debug_logger = self._get_logger(f"debug-{name}", debug_path, level=logging.DEBUG, stream=print_debug)
-        self._info_logger = self._get_logger(f"info-{name}", info_path, level=logging.INFO, stream=print_info)
-        self._warining_logger = self._get_logger(f"warning-{name}", warning_path, level=logging.WARNING,
-                                                 stream=print_warning)
-        self._error_logger = self._get_logger(f"error-{name}", error_path, level=logging.ERROR, stream=print_error)
+        self._debug_logger = self._get_format_logger(f"debug-{name}", debug_path, level=logging.DEBUG,
+                                                     stream=print_debug)
+        self._info_logger = self._get_format_logger(f"info-{name}", info_path, level=logging.INFO, stream=print_info)
+        self._warining_logger = self._get_format_logger(f"warning-{name}", warning_path, level=logging.WARNING,
+                                                        stream=print_warning)
+        self._error_logger = self._get_format_logger(f"error-{name}", error_path, level=logging.ERROR,
+                                                     stream=print_error)
         self._single_mode = single_mode
         self._level = level
         self._param_dict = dict(
@@ -76,22 +82,27 @@ class Logger:
             level=level,
             tz=tz
         )
-        self.saved_loggers[name] = self
+        self._saved_loggers[name] = self
 
     @classmethod
     def get_logger(cls, name):
-        if name in cls.saved_loggers:
-            return cls.saved_loggers[name]
+        if name in cls._saved_loggers:
+            return cls._saved_loggers[name]
+        else:
+            raise ValueError(
+                f"`{name}` was not not find in saved_logges list, pls use `sparrow.log.Logger()` "
+                f"to instantiate a logger object."
+            )
 
     def debug(self, *msg, sep=' ', **kwargs):
         currentframe = inspect.currentframe()
-        msg = self.get_format_msg(currentframe, msg, "DEBUG", sep=sep)
+        msg = self._get_format_msg(currentframe, msg, "DEBUG", sep=sep)
         if self._level <= logging.DEBUG:
             self._debug_logger.debug(msg, **kwargs)
 
     def info(self, *msg, sep=' ', **kwargs):
         currentframe = inspect.currentframe()
-        msg = self.get_format_msg(currentframe, msg, "INFO", sep=sep)
+        msg = self._get_format_msg(currentframe, msg, "INFO", sep=sep)
         if self._level <= logging.INFO:
             self._info_logger.info(msg, **kwargs)
             if not self._single_mode:
@@ -99,7 +110,7 @@ class Logger:
 
     def warning(self, *msg, sep=' ', **kwargs):
         currentframe = inspect.currentframe()
-        msg = self.get_format_msg(currentframe, msg, "WARNING", sep=sep)
+        msg = self._get_format_msg(currentframe, msg, "WARNING", sep=sep)
         if self._level <= logging.WARNING:
             self._warining_logger.warning(msg, **kwargs)
             if not self._single_mode:
@@ -108,7 +119,7 @@ class Logger:
 
     def error(self, *msg, sep=' ', **kwargs):
         currentframe = inspect.currentframe()
-        msg = self.get_format_msg(currentframe, msg, "ERROR", sep=sep)
+        msg = self._get_format_msg(currentframe, msg, "ERROR", sep=sep)
         if self._level <= logging.ERROR:
             self._error_logger.error(msg, **kwargs)
             if not self._single_mode:
@@ -117,7 +128,7 @@ class Logger:
                 self._warining_logger.error(msg, **kwargs)
 
     @staticmethod
-    def get_format_msg(currentframe, msg: tuple, level, sep=" "):
+    def _get_format_msg(currentframe, msg: tuple, level, sep=" "):
         filename = os.path.basename(currentframe.f_back.f_code.co_filename)
         lineno = currentframe.f_back.f_lineno
         msg_list = [str(i) for i in msg]
@@ -125,7 +136,7 @@ class Logger:
         msg = f"[{filename}]-[line:{lineno}]-{level} >>> " + msg
         return msg
 
-    def _get_logger(self, name, log_abs_path, level=logging.INFO, stream=True):
+    def _get_format_logger(self, name, log_abs_path, level=logging.INFO, stream=True):
         default_formats = {
             'color_format': '%(log_color)s%(asctime)s-%(message)s',
             'log_format': '%(asctime)s-%(message)s'
@@ -144,7 +155,7 @@ class Logger:
         logger = logging.Logger(name, level=level)
 
         stream_formatter = colorlog.ColoredFormatter(default_formats["color_format"],
-                                                     log_colors=self.colors_config,
+                                                     log_colors=self._colors_config,
                                                      datefmt='%Y/%m/%d %H:%M:%S')
 
         file_formatter = logging.Formatter(default_formats["log_format"],
@@ -162,7 +173,6 @@ class Logger:
             stream_handler.setFormatter(stream_formatter)
             logger.addHandler(stream_handler)
         # logger.setLevel(level)
-
         return logger
 
 
@@ -217,7 +227,7 @@ class SingletonLogger(Logger, metaclass=MetaSingleton):
 
     @classmethod
     def getLogger(cls):
-        """Logger is singleton，this is equivalent to using Logger () directly"""
+        """SingletonLogger is singleton，this is equivalent to using Logger () directly"""
         return cls()
 
     def copy(self):
