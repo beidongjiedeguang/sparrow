@@ -12,7 +12,7 @@ from ..decorators.core import MetaSingleton
 class Logger:
     """
     Examples:
-        >>> logger = Logger(name='train-log', log_dir='./logs', print_debug=True)
+        >>> logger = Logger(name='train-log', log_dir='./log', print_debug=True)
         >>> logger.debug("hello", "list", [1, 2, 3, 4, 5])
 
         >>> logger2 = Logger.get_logger('train-log')
@@ -23,8 +23,8 @@ class Logger:
     _saved_loggers = {}
 
     def __init__(self,
-                 log_dir='./',
                  name='name',
+                 log_dir='./logs',
                  debug_path="debug.log",
                  info_path='info.log',
                  warning_path='warn.log',
@@ -69,6 +69,7 @@ class Logger:
         self._single_mode = single_mode
         self._level = level
         self._param_dict = dict(
+            name=name,
             log_dir=log_dir,
             debug_path=debug_path,
             info_path=info_path,
@@ -85,14 +86,11 @@ class Logger:
         self._saved_loggers[name] = self
 
     @classmethod
-    def get_logger(cls, name):
+    def get_logger(cls, name, **kwargs):
         if name in cls._saved_loggers:
             return cls._saved_loggers[name]
         else:
-            raise ValueError(
-                f"`{name}` was not not find in saved_logges list, pls use `sparrow.log.Logger()` "
-                f"to instantiate a logger object."
-            )
+            return Logger(name=name, **kwargs)
 
     def debug(self, *msg, sep=' ', **kwargs):
         currentframe = inspect.currentframe()
@@ -195,8 +193,8 @@ def findcaller(func):
 
 class SingletonLogger(Logger, metaclass=MetaSingleton):
     def __init__(self,
-                 log_dir='./',
                  name='name',
+                 log_dir='./logs',
                  debug_path="debug.log",
                  info_path='info.log',
                  warning_path='warn.log',
@@ -210,8 +208,8 @@ class SingletonLogger(Logger, metaclass=MetaSingleton):
                  tz='origin'
                  ):
         super().__init__(
-            log_dir=log_dir,
             name=name,
+            log_dir=log_dir,
             debug_path=debug_path,
             info_path=info_path,
             warning_path=warning_path,
@@ -231,6 +229,6 @@ class SingletonLogger(Logger, metaclass=MetaSingleton):
         return cls()
 
     def copy(self):
-        new_logger = object.__new__(Logger)
+        new_logger = object.__new__(SingletonLogger)
         new_logger.__init__(**self._param_dict)
         return new_logger
