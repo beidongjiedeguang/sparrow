@@ -14,7 +14,7 @@ class VersionControl:
 
         self.config = None
         self._pkgname = pkgname
-        self._config_path = os.path.join(pkgdir, filename)
+        self._config_path = filename
         if version is None:
             try:
                 self.get_config()
