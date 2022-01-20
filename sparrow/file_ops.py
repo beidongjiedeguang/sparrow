@@ -2,25 +2,26 @@ import os
 import sys
 import shutil
 from glob import glob
+from sparrow.path import rel_to_abs
 from .core import broadcast
 import pickle
-
-
-def _rm(path):
-    """remove path
-    """
-    if os.path.exists(path):
-        if os.path.isfile(path):
-            os.remove(path)
-        elif os.path.isdir(path):
-            shutil.rmtree(path)
-        else:
-            print(f'{path} is illegal.')
 
 
 @broadcast
 def rm(PATH):
     """ Enhanced rm, support for regular expressions """
+
+    def _rm(path):
+        """remove path
+        """
+        if os.path.exists(path):
+            if os.path.isfile(path):
+                os.remove(path)
+            elif os.path.isdir(path):
+                shutil.rmtree(path)
+            else:
+                print(f'{path} is illegal.')
+
     path_list = glob(PATH)
     for path in path_list:
         _rm(path)
@@ -53,23 +54,25 @@ def load(filename):
     return file
 
 
-def yaml_dump(filepath, data):
+def yaml_dump(filepath, data, rel_path=True):
+    abs_path = rel_to_abs(filepath) if rel_path else filepath
     from yaml import dump
     try:
         from yaml import CDumper as Dumper
     except ImportError:
         from yaml import Dumper
-    with open(filepath, "w", encoding='utf-8') as fw:
+    with open(abs_path, "w", encoding='utf-8') as fw:
         fw.write(dump(data, Dumper=Dumper, allow_unicode=True, indent=4))
 
 
-def yaml_load(filepath):
+def yaml_load(filepath, rel_path=True):
+    abs_path = rel_to_abs(filepath) if rel_path else filepath
     from yaml import load
     try:
         from yaml import CLoader as Loader
     except ImportError:
         from yaml import Loader
-    with open(filepath, 'r', encoding="utf-8") as stream:
+    with open(abs_path, 'r', encoding="utf-8") as stream:
         #     stream = stream.read()
         content = load(stream, Loader=Loader)
     return content
