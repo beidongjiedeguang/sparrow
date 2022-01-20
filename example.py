@@ -1,11 +1,13 @@
 import logging
 import numpy as np
 from sparrow.version_ops import VersionControl
-from sparrow.color_str import *
+from sparrow.string.color_string import *
 from sparrow.core import *
-from sparrow.decorator import *
+from sparrow.decorators import *
 from sparrow.time import *
 import time
+
+
 # vc = VersionControl("sparrow-tool")
 # vc.update_version(1)
 
@@ -18,6 +20,7 @@ def function(n):
     s = n
     time.sleep(0.1)
     return s
+
 
 if __name__ == "__main__":
     print(rgb_string("hello rgb string", YELLOW))

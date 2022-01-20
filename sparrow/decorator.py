@@ -1,5 +1,5 @@
-from .color.color_str import rgb_string
 from .color.constant import GREEN, RED, BLUE
+from .string.color_string import rgb_string
 from functools import wraps, update_wrapper
 import logging
 import inspect

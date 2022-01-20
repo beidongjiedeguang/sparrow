@@ -1,6 +1,25 @@
 CHANGES
 =======
 
+0.3.13
+------
+
+* [Upgrade] Version bump to [0.3.13]
+* Adjust parameter's position
+
+0.3.12
+------
+
+* [Upgrade] Version bump to [0.3.12]
+* clean code
+
+0.3.11
+------
+
+* [Upgrade] Version bump to [0.3.11]
+* Version upgrade
+* Use logger like print
+
 0.3.9
 -----
 
