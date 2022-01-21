@@ -3,6 +3,7 @@ import sys
 import shutil
 from glob import glob
 from sparrow.path import rel_to_abs
+from deprecated import deprecated
 from .core import broadcast
 import pickle
 
@@ -38,6 +39,7 @@ def path(string: str) -> str:
         return string
 
 
+@deprecated(version="0.4.0", reason="Deprecated")
 def ppath(pathname, file=__file__) -> str:
     """Path in package"""
     return path(os.path.join(os.path.dirname(file), pathname))
@@ -55,7 +57,7 @@ def load(filename):
 
 
 def yaml_dump(filepath, data, rel_path=True):
-    abs_path = rel_to_abs(filepath) if rel_path else filepath
+    abs_path = rel_to_abs(filepath, use_parent=True) if rel_path else filepath
     from yaml import dump
     try:
         from yaml import CDumper as Dumper
@@ -66,7 +68,7 @@ def yaml_dump(filepath, data, rel_path=True):
 
 
 def yaml_load(filepath, rel_path=True):
-    abs_path = rel_to_abs(filepath) if rel_path else filepath
+    abs_path = rel_to_abs(filepath, use_parent=True) if rel_path else filepath
     from yaml import load
     try:
         from yaml import CLoader as Loader

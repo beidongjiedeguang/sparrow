@@ -1,5 +1,4 @@
 import os
-
 from .file_ops import yaml_load, yaml_dump, rm
 from .string_ops import string_add
 
