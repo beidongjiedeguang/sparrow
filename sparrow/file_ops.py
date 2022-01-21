@@ -56,7 +56,7 @@ def load(filename):
     return file
 
 
-def yaml_dump(filepath, data, rel_path=True):
+def yaml_dump(filepath, data, rel_path=False):
     abs_path = rel_to_abs(filepath, use_parent=True) if rel_path else filepath
     from yaml import dump
     try:
@@ -67,7 +67,7 @@ def yaml_dump(filepath, data, rel_path=True):
         fw.write(dump(data, Dumper=Dumper, allow_unicode=True, indent=4))
 
 
-def yaml_load(filepath, rel_path=True):
+def yaml_load(filepath, rel_path=False):
     abs_path = rel_to_abs(filepath, use_parent=True) if rel_path else filepath
     from yaml import load
     try:

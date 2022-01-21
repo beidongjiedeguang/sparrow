@@ -13,7 +13,7 @@ class VersionControl:
 
         self.config = None
         self._pkgname = pkgname
-        self._config_path = filename
+        self._config_path = os.path.join(pkgdir, filename)
         if version is None:
             try:
                 self.get_config()
@@ -26,10 +26,10 @@ class VersionControl:
     def gen_config(self, version="0.0.0"):
         config = {"name": self._pkgname, "version": version}
         self.config = config
-        yaml_dump(self._config_path, config)
+        yaml_dump(self._config_path, config, rel_path=False)
 
     def get_config(self):
-        config = yaml_load(self._config_path)
+        config = yaml_load(self._config_path, rel_path=False)
         self.config = config
         return config
 
@@ -37,11 +37,11 @@ class VersionControl:
         self.config['version'] = version
 
     def save_config(self):
-        yaml_dump(self._config_path, self.config)
+        yaml_dump(self._config_path, self.config, rel_path=False)
 
     def update_version(self, version_step=1):
         self.config['version'] = string_add(self.config["version"], version_step)
-        yaml_dump(self._config_path, self.config)
+        yaml_dump(self._config_path, self.config, rel_path=False)
 
     def clean_config_file(self):
         os.remove(self._config_path)
