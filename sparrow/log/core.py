@@ -17,7 +17,7 @@ class Logger:
 
         >>> logger2 = Logger.get_logger('train-log')
         >>> id(logger2) == id(logger)
-        True
+        >>> True
 
     """
     _saved_loggers = {}
