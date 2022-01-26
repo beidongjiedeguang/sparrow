@@ -1,7 +1,7 @@
 import keyboard
 import time
 from collections import deque
-from sparrow.string.color_string import rgb_string, GREEN, BLUE, BLUE_A, BLUE_B, BLUE_C, TEAL
+from sparrow.string.color_string import rgb_string, GREEN, TEAL
 
 
 def timer(dt=0.01):
@@ -12,8 +12,8 @@ def timer(dt=0.01):
     print(rgb_string("Press `space` to start and suspend.", color=TEAL), )
     q = deque(maxlen=1)
     q.append(True)
-    keyboard.add_hotkey('space', lambda: q.append(not q[0]))
     keyboard.wait('space')
+    keyboard.add_hotkey('space', lambda: q.append(not q[0]))
     t0 = time.time()
     current_time = 0
     while True:
