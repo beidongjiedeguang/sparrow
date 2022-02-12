@@ -7,7 +7,7 @@ pkgdir = "sparrow"
 vc = VersionControl(pkgname, pkgdir, version=None)
 vc.update_version()
 vc.update_readme()
-# os.system("yapf -i -r ./sparrow")
+# os.system("black ./sparrow")
 # vc.upload_pypi()
 
 repo = Repo('.')
