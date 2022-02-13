@@ -5,7 +5,7 @@ from IPython import get_ipython
 from IPython.display import display_html
 
 
-def display_np_arrays_as_images():
+def display_np_arrays():
     def np_to_png(a):
         if 2 <= len(a.shape) <= 3:
             return fromarray(
