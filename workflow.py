@@ -7,11 +7,11 @@ pkgdir = "sparrow"
 vc = VersionControl(pkgname, pkgdir, version=None)
 vc.update_version()
 vc.update_readme()
-# os.system("yapf -i -r ./sparrow")
+# os.system("black ./sparrow")
 # vc.upload_pypi()
 
 repo = Repo('.')
-repo.index.add(["README*.md", "requirements.txt", "workflow.py", 'setup.*', 'sparrow/version-config.yaml'])
+repo.index.add(["README*.md", "workflow.py", 'setup.*', 'sparrow/version-config.yaml'])
 repo.index.commit(f"[Upgrade] Version bump to [{vc.config['version']}]")
 repo.create_tag(f"{vc.config['version']}")
 remote = repo.remote()
