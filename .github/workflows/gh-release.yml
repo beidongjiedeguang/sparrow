@@ -25,7 +25,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           body: |
-            See [CHANGELOG.md](https://github.com/beidongjiedeguang/sparrow/blob/main/CHANGELOG.md)).
+            See [CHANGELOG.md](https://github.com/beidongjiedeguang/sparrow/blob/ ${{ github.ref }}/CHANGELOG).
           published: true
           draft: false
           prerelease: false
