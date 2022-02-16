@@ -39,12 +39,6 @@ def path(string: str) -> str:
         return string
 
 
-@deprecated(version="0.4.0", reason="Deprecated")
-def ppath(pathname, file=__file__) -> str:
-    """Path in package"""
-    return path(os.path.join(os.path.dirname(file), pathname))
-
-
 def save(filename, file):
     with open(filename, 'wb') as fw:
         pickle.dump(file, fw)

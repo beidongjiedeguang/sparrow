@@ -22,12 +22,12 @@ def __set_rgb(RGB_fore=(240, 85, 85), SRG=0, RGB_back=None):
             | 6  |     Rapid Blink
             | 7  |     Swap the background color with the foreground color
     """
-    Fore_color = f"{CSI}{SRG};38;2;{RGB_fore[0]};{RGB_fore[1]};{RGB_fore[2]}m"
+    fore_color = f"{CSI}{SRG};38;2;{RGB_fore[0]};{RGB_fore[1]};{RGB_fore[2]}m"
     if RGB_back is None:
-        Back_color = ''
+        back_color = ''
     else:
-        Back_color = f"{CSI}{SRG};48;2;{RGB_back[0]};{RGB_back[1]};{RGB_back[2]}m"
-    return Fore_color + Back_color
+        back_color = f"{CSI}{SRG};48;2;{RGB_back[0]};{RGB_back[1]};{RGB_back[2]}m"
+    return fore_color + back_color
 
 
 def _rgb_str(string, RGB_fore=(240, 85, 85), SRG=0, RGB_back=None):
