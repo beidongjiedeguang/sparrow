@@ -1,8 +1,11 @@
 on:
   push:
+    branches:
+      - 'main'
+      - 'master'
     # Sequence of patterns matched against refs/tags
     tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v2.01.2
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 name: Create Release
 
@@ -22,7 +25,7 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           body: |
-            See [CHANGELOG.md]https://github.com/beidongjiedeguang/sparrow/blob/${{ github.ref }}/CHANGELOG.md).
+            See [CHANGELOG.md](https://github.com/beidongjiedeguang/sparrow/blob/main/CHANGELOG.md)).
           published: true
           draft: false
           prerelease: false
