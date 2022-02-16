@@ -1,6 +1,45 @@
 CHANGES
 =======
 
+v0.4.0
+------
+
+* [Upgrade] Version bump to [0.4.0]
+* fix tag
+* [Upgrade] Version bump to [0.4.0]
+* delete \`ppath\`
+* fake dataset generator
+* add tag to release rule
+* add prefix v to commit tag
+* clean code
+* delete files
+* update
+
+0.3.22
+------
+
+* [Upgrade] Version bump to [0.3.22]
+* Add function  in jupyterlab
+
+0.3.21
+------
+
+* [Upgrade] Version bump to [0.3.21]
+* update
+* Add jupyter utils
+* Add pachage einops
+* [Upgrade] Version bump to [0.3.20]
+* Use black to refector code
+* Move fastapi to dev env
+
+0.3.19
+------
+
+* [Upgrade] Version bump to [0.3.19]
+* Delete requrements description
+* move requirements to setup.cfg
+* Continue subseries algorithm
+* Improvements
 * Update comment
 * Delete nightworkflow.py
 
