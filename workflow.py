@@ -15,7 +15,7 @@ vc.update_readme()
 
 repo = Repo('.')
 repo.index.add(["README*.md", "workflow.py", 'setup.*', 'sparrow/version-config.yaml'])
-repo.index.commit(f"[Upgrade] Bump version ({old_version}-> {new_version})")
+repo.index.commit(f"[Upgrade] Bump version ({old_version} -> {new_version})")
 tag = f"v{new_version}"
 repo.create_tag(tag)
 remote = repo.remote()
