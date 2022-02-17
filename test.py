@@ -1,10 +1,3 @@
-"""
-Usage: python test.py
-1. Installs part of dependencies (make sure `which pip` points to correct location)
-2. Installs current version of sparrow in editable mode
-3. Runs tests
-"""
-
 import os
 from subprocess import Popen, PIPE
 from pathlib import Path
@@ -23,6 +16,7 @@ def run(cmd, **env):
 dependencies = [
     'pytest',
     'numpy',
+    'einops'
     # 'parameterized',
 ]
 
