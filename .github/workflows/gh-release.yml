@@ -1,13 +1,13 @@
-#on:
-#  push:
-##     Sequence of patterns matched against refs/tags
-#    tags:
-#      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
-
 on:
   push:
-    branches-ignore:
-      - '**'  # temporally disable this action
+#     Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+#on:
+#  push:
+#    branches-ignore:
+#      - '**'  # temporally disable this action
 
 
 name: Create Release
@@ -31,4 +31,4 @@ jobs:
             See [CHANGELOG.md](https://github.com/beidongjiedeguang/sparrow/blob/main/ChangeLog).
           draft: false
           prerelease: false
-          published: true
+          commitish: true
