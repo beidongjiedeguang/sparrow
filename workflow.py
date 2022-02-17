@@ -16,5 +16,5 @@ repo.index.commit(f"[Upgrade] Version bump to [{vc.config['version']}]")
 tag = f"v{vc.config['version']}"
 repo.create_tag(tag)
 remote = repo.remote()
-remote.push(tag)
+# remote.push(tag)
 remote.push()
