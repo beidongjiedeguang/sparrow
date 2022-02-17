@@ -31,4 +31,3 @@ jobs:
             See [CHANGELOG.md](https://github.com/beidongjiedeguang/sparrow/blob/main/ChangeLog).
           draft: false
           prerelease: false
-          commitish: true
