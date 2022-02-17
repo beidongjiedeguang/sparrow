@@ -8,6 +8,7 @@ from .core import broadcast
 import pickle
 
 
+@deprecated(version="0.5.0", reason="Deprecated, use `sparrow.io.ops` instead.")
 @broadcast
 def rm(PATH):
     """ Enhanced rm, support for regular expressions """
@@ -28,6 +29,7 @@ def rm(PATH):
         _rm(path)
 
 
+@deprecated(version="0.5.0", reason="Deprecated, use `sparrow.io.ops` instead.")
 def path(string: str) -> str:
     """Adaptive to different platforms """
     platform = sys.platform.lower()
@@ -39,17 +41,20 @@ def path(string: str) -> str:
         return string
 
 
+@deprecated(version="0.5.0", reason="Deprecated, use `sparrow.io.ops` instead.")
 def save(filename, file):
     with open(filename, 'wb') as fw:
         pickle.dump(file, fw)
 
 
+@deprecated(version="0.5.0", reason="Deprecated, use `sparrow.io.ops` instead.")
 def load(filename):
     with open(filename, 'rb') as fi:
         file = pickle.load(fi)
     return file
 
 
+@deprecated(version="0.5.0", reason="Deprecated, use `sparrow.io.ops` instead.")
 def yaml_dump(filepath, data, rel_path=False):
     abs_path = rel_to_abs(filepath, use_parent=True) if rel_path else filepath
     from yaml import dump
@@ -61,6 +66,7 @@ def yaml_dump(filepath, data, rel_path=False):
         fw.write(dump(data, Dumper=Dumper, allow_unicode=True, indent=4))
 
 
+@deprecated(version="0.5.0", reason="Deprecated, use `sparrow.io.ops` instead.")
 def yaml_load(filepath, rel_path=False):
     abs_path = rel_to_abs(filepath, use_parent=True) if rel_path else filepath
     from yaml import load

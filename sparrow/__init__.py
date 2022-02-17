@@ -1,4 +1,4 @@
-from .file_ops import yaml_load, yaml_dump, save, load, rm
+from .io import yaml_load, yaml_dump, save, load, rm
 from .decorators import benchmark
 from .string.color_string import rgb_string
 from .functions.core import clamp

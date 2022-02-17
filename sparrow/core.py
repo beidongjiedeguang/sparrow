@@ -2,13 +2,16 @@ from collections import Counter
 from functools import wraps
 import pickle
 import numpy as np
+from deprecated import deprecated
 
 
+@deprecated(version="0.5.0", reason="Deprecated, use `sparrow.io.core` instead.")
 def save_var(filename, data):
     with open(filename, 'wb') as fw:
         pickle.dump(data, fw)
 
 
+@deprecated(version="0.5.0", reason="Deprecated, use `sparrow.io.core` instead.")
 def load_var(filename):
     with open(filename, 'rb') as fi:
         data = pickle.load(fi)
