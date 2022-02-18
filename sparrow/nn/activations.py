@@ -19,7 +19,7 @@ class Sigmoid:
 
 class ReLU:
     def __init__(self):
-        """A rectified linear activation function. """
+        """A rectified linear activation function."""
 
     def __str__(self):
         return "ReLU"
@@ -92,7 +92,7 @@ class Tanh:
     @staticmethod
     def grad2(x):
         tanh_x = np.tanh(x)
-        return -2 * tanh_x * (1 - tanh_x ** 2)
+        return -2 * tanh_x * (1 - tanh_x**2)
 
 
 class Affine:
@@ -153,8 +153,7 @@ class ELU:
         return "ELU(alpha={})".format(self.alpha)
 
     def fn(self, z):
-        """ z if z > 0  else alpha * (e^z - 1)
-        """
+        """z if z > 0  else alpha * (e^z - 1)"""
         return np.where(z > 0, z, self.alpha * (np.exp(z) - 1))
 
     def grad(self, x):
@@ -204,7 +203,9 @@ class SELU:
 
     def grad(self, x):
         return np.where(
-            x >= 0, np.ones_like(x) * self.scale, np.exp(x) * self.alpha * self.scale,
+            x >= 0,
+            np.ones_like(x) * self.scale,
+            np.exp(x) * self.alpha * self.scale,
         )
 
     def grad2(self, x):

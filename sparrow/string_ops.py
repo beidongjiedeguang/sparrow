@@ -1,6 +1,7 @@
 import re
 import cn2an
 
+
 def find_all_index(pattern, string, flags=0):
     """find all matched index of string"""
     return [i.span() for i in re.finditer(pattern, string, flags=flags)]
@@ -9,7 +10,7 @@ def find_all_index(pattern, string, flags=0):
 def string_add(string: str, dx=1):
     # count_points = string.count('.')
     items = find_all_index(r"\.", string)
-    number_list = [i for i in string.split('.')]
+    number_list = [i for i in string.split(".")]
     number_str = "".join(number_list)
     number_len = len(number_str)
     number = int(number_str)
@@ -49,7 +50,7 @@ def find_match(start, end, S, flag=0):
         END = re.search(end, S, flags=flag).span()[0]
         return S[START:END]
     except:
-        print('Do not match anything.')
+        print("Do not match anything.")
         return None
 
 

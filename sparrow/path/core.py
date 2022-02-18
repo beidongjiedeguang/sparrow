@@ -3,7 +3,7 @@ import inspect
 
 
 def rel_to_abs(rel_path: str, use_parent=False):
-    """Return absolute path relative to the called file """
+    """Return absolute path relative to the called file"""
     currentframe = inspect.currentframe()
     f = currentframe.f_back
     if use_parent:

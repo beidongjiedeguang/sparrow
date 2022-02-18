@@ -7,5 +7,4 @@ class Beijing:
 
     @property
     def now(self):
-        return pendulum.now("Asia/Shanghai").strftime('%m-%d %H:%M:%S')
-
+        return pendulum.now("Asia/Shanghai").strftime("%m-%d %H:%M:%S")

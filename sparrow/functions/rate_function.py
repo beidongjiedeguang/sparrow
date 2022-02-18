@@ -10,7 +10,7 @@ def smooth(t):
     # Zero first and second derivatives at t=0 and t=1.
     # Equivalent to bezier([0, 0, 0, 1, 1, 1])
     s = 1 - t
-    return (t ** 3) * (10 * s * s + 5 * s * t + t * t)
+    return (t**3) * (10 * s * s + 5 * s * t + t * t)
 
 
 def rush_into(t):
@@ -37,8 +37,8 @@ def there_and_back(t):
     return smooth(new_t)
 
 
-def there_and_back_with_pause(t, pause_ratio=1. / 3):
-    a = 1. / pause_ratio
+def there_and_back_with_pause(t, pause_ratio=1.0 / 3):
+    a = 1.0 / pause_ratio
     if t < 0.5 - pause_ratio / 2:
         return smooth(a * t)
     elif t < 0.5 + pause_ratio / 2:

@@ -34,7 +34,7 @@ def series_concatenate_and_sort(series_a, series_b):
     """
     t_series = np.concatenate((series_a, series_b))
     sorted_idxs = np.argsort(t_series)
-    series_b_idxs = np.argsort(sorted_idxs)[-len(series_b):]
+    series_b_idxs = np.argsort(sorted_idxs)[-len(series_b) :]
     return t_series[sorted_idxs], series_b_idxs
 
 
@@ -46,7 +46,9 @@ def calc_continue_series_dict(target_series, key_series):
         >>> calc_continue_series_dict(a, b)
         {2: array([0, 1, 2]), 10: array([ 7,  8,  9, 10, 11, 12, 13])}
     """
-    concatenated_series, flag_idxs = series_concatenate_and_sort(target_series, key_series)
+    concatenated_series, flag_idxs = series_concatenate_and_sort(
+        target_series, key_series
+    )
     target_dict = {}
     for idx in range(len(key_series)):
         subseries = get_continue_subseries(concatenated_series, flag_idxs[idx])

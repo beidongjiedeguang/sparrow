@@ -56,8 +56,10 @@ def test_time(times=10):
             average_cost_time = (end - start) / times
             time_str = f"{average_cost_time:.3f}"
 
-            print(f"Run {rgb_string(str(times), GREEN)} times, "
-                  f"the average time is {rgb_string(time_str, GREEN)} seconds.")
+            print(
+                f"Run {rgb_string(str(times), GREEN)} times, "
+                f"the average time is {rgb_string(time_str, GREEN)} seconds."
+            )
             return func(*args, **kwargs)
 
         return wrapper
@@ -75,7 +77,9 @@ def benchmark(func):
         end = time.time()
         cost_time = end - start
         time_str = f"{cost_time:.3f}"
-        print(f"Finished {rgb_string(func.__name__, RED)} in {rgb_string(time_str, GREEN)} secs.")
+        print(
+            f"Finished {rgb_string(func.__name__, RED)} in {rgb_string(time_str, GREEN)} secs."
+        )
         return value
 
     return wrapper
@@ -98,8 +102,8 @@ def repeat(n=2):
 
 
 def optional_debug(func):
-    if 'debug' in inspect.signature(func).parameters:
-        raise TypeError('debug argument already defined')
+    if "debug" in inspect.signature(func).parameters:
+        raise TypeError("debug argument already defined")
 
     debug_default = True
 
@@ -117,15 +121,17 @@ def optional_debug(func):
 
     sig = inspect.signature(func)
     parms = list(sig.parameters.values())
-    parms.append(inspect.Parameter('debug',
-                                   inspect.Parameter.KEYWORD_ONLY,
-                                   default=debug_default))
+    parms.append(
+        inspect.Parameter(
+            "debug", inspect.Parameter.KEYWORD_ONLY, default=debug_default
+        )
+    )
     wrapper.__signature__ = sig.replace(parameters=parms)
     return wrapper
 
 
 def count_calls(func):
-    """Count the number of calls made to the decorated function. """
+    """Count the number of calls made to the decorated function."""
 
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -232,6 +238,7 @@ class MetaSingleton(type):
         class Cls(metaclass=MetaSingleton):
             pass
     """
+
     _instances = {}
 
     def __call__(cls, *args, **kwargs):

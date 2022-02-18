@@ -6,22 +6,22 @@ import operator as op
 
 
 def gaussian(x, sigma, miu):
-    """Standard Gaussian function
-    """
-    a = 1 / np.sqrt(2 * np.pi * sigma ** 2)
-    return a * np.exp(-(x - miu) ** 2 / (2 * sigma ** 2))
+    """Standard Gaussian function"""
+    a = 1 / np.sqrt(2 * np.pi * sigma**2)
+    return a * np.exp(-((x - miu) ** 2) / (2 * sigma**2))
 
 
 def norm_gaussian(x, sigma, miu):
     """Normalized Gaussion fuction"""
-    return np.exp(-(x - miu) ** 2 / (2 * sigma ** 2))
+    return np.exp(-((x - miu) ** 2) / (2 * sigma**2))
 
 
 def gaussian_2d(U, V, sigma, miu):
-    a = 1 / np.sqrt(2 * np.pi * sigma ** 2)
-    res_max = a * np.exp(-((0 - miu) ** 2 + (0 - miu) ** 2) /
-                         (2 * sigma ** 2))  # For normalization
-    res = a * np.exp(-((U - miu) ** 2 + (V - miu) ** 2) / (2 * sigma ** 2))
+    a = 1 / np.sqrt(2 * np.pi * sigma**2)
+    res_max = a * np.exp(
+        -((0 - miu) ** 2 + (0 - miu) ** 2) / (2 * sigma**2)
+    )  # For normalization
+    res = a * np.exp(-((U - miu) ** 2 + (V - miu) ** 2) / (2 * sigma**2))
     return res / res_max  # Normalized
 
 

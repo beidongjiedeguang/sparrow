@@ -3,7 +3,7 @@ from pandas import DataFrame
 
 
 class Generator:
-    def __init__(self, locale='zh_CN'):
+    def __init__(self, locale="zh_CN"):
         # locale = ['zh_CN', 'en_US', 'ja_JP']
         self._fake = Faker(locale)
         self._dataset = []
@@ -23,16 +23,18 @@ class Generator:
             job.append(self._fake.job()),
             company.append(self._fake.company())
 
-        return DataFrame({
-            'date': date,
-            'name': name,
-            'address': address,
-            'phone_number': phone_nubmer,
-            'email': free_email,
-            'company': company,
-            'job': job,
-            # 'sentence': sentence,
-        })
+        return DataFrame(
+            {
+                "date": date,
+                "name": name,
+                "address": address,
+                "phone_number": phone_nubmer,
+                "email": free_email,
+                "company": company,
+                "job": job,
+                # 'sentence': sentence,
+            }
+        )
 
 
 if __name__ == "__main__":

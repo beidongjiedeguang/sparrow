@@ -1,9 +1,9 @@
 from ..color import color_to_int_rgb
 from ..color.constant import *
 
-CSI = '\033['
-OSC = '\033]'
-OFF = CSI + '0m'
+CSI = "\033["
+OSC = "\033]"
+OFF = CSI + "0m"
 
 
 def __set_rgb(RGB_fore=(240, 85, 85), SRG=0, RGB_back=None):
@@ -24,7 +24,7 @@ def __set_rgb(RGB_fore=(240, 85, 85), SRG=0, RGB_back=None):
     """
     fore_color = f"{CSI}{SRG};38;2;{RGB_fore[0]};{RGB_fore[1]};{RGB_fore[2]}m"
     if RGB_back is None:
-        back_color = ''
+        back_color = ""
     else:
         back_color = f"{CSI}{SRG};48;2;{RGB_back[0]};{RGB_back[1]};{RGB_back[2]}m"
     return fore_color + back_color
@@ -43,6 +43,3 @@ def rgb_string(string, color=RED, **kwargs):
     """
     rgb = color_to_int_rgb(color)
     return _rgb_str(string, rgb, **kwargs)
-
-
-

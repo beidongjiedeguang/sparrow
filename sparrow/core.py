@@ -7,19 +7,19 @@ from deprecated import deprecated
 
 @deprecated(version="0.5.0", reason="Deprecated, use `sparrow.io.core` instead.")
 def save_var(filename, data):
-    with open(filename, 'wb') as fw:
+    with open(filename, "wb") as fw:
         pickle.dump(data, fw)
 
 
 @deprecated(version="0.5.0", reason="Deprecated, use `sparrow.io.core` instead.")
 def load_var(filename):
-    with open(filename, 'rb') as fi:
+    with open(filename, "rb") as fi:
         data = pickle.load(fi)
     return data
 
 
 def clamp(x, x_min, x_max):
-    """ Clamp a number to same range.
+    """Clamp a number to same range.
     It's equivalent to np.clip()
     Examples:
         >>> clamp(-1, 0, 1)
@@ -32,17 +32,17 @@ def clamp(x, x_min, x_max):
 
 def broadcast(func):  # It can be replaced by `np.vectorize`
     """Only for a functions with a single argument
-        example:
-        @broadcast
-        def f(x):
-            # A function that can map only a single element
-            if x==1 or x==0:
-                return x
-            else:
-                return f(x-1)+f(x-2)
+    example:
+    @broadcast
+    def f(x):
+        # A function that can map only a single element
+        if x==1 or x==0:
+            return x
+        else:
+            return f(x-1)+f(x-2)
 
-        >> f([2,4,10])
-        >> (1, 3, 832040)
+    >> f([2,4,10])
+    >> (1, 3, 832040)
     """
 
     @wraps(func)
@@ -91,7 +91,7 @@ class Constant:
 
     def __setattr__(self, name, value):
         if hasattr(self, name):
-            raise ValueError('Constant value can\'t be changed')
+            raise ValueError("Constant value can't be changed")
         else:
             self.__dict__[name] = value
 

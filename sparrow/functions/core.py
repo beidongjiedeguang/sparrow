@@ -28,9 +28,11 @@ def topk(a, k, axis=-1, largest=True, sort=True):
         if largest:
             sorted_indices_in_topk = np.flip(sorted_indices_in_topk, axis=axis)
         sorted_topk_values = np.take_along_axis(
-            topk_values, sorted_indices_in_topk, axis=axis)
+            topk_values, sorted_indices_in_topk, axis=axis
+        )
         sorted_topk_indices = np.take_along_axis(
-            topk_indices, sorted_indices_in_topk, axis=axis)
+            topk_indices, sorted_indices_in_topk, axis=axis
+        )
         return sorted_topk_values, sorted_topk_indices
     return topk_values, topk_indices
 
@@ -45,7 +47,7 @@ def random_idx(idx_range, exclude_idx=None):
 
 
 def clamp(x, x_min, x_max):
-    """ Clamp a number to same range.
+    """Clamp a number to same range.
     Examples:
         >>> clamp(-1, 0, 1)
         >>> 0

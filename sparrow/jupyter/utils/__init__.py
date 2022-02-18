@@ -29,7 +29,6 @@ def display_np_arrays():
     )
 
 
-
 _style_inline = """<style>
 .sparrow-answer {
     color: transparent;

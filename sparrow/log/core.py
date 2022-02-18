@@ -42,7 +42,7 @@ class Logger:
         """
         Parameters
         ----------
-            tz_is_china: bool 
+            tz_is_china: bool
                 time zone is China or not
         """
 

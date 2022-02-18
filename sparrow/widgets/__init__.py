@@ -9,11 +9,13 @@ def timer(dt=0.01):
     Press `space` to start and suspend.
     press `q` to quit.
     """
-    print(rgb_string("Press `space` to start and suspend.", color=TEAL), )
+    print(
+        rgb_string("Press `space` to start and suspend.", color=TEAL),
+    )
     q = deque(maxlen=1)
     q.append(True)
-    keyboard.wait('space')
-    keyboard.add_hotkey('space', lambda: q.append(not q[0]))
+    keyboard.wait("space")
+    keyboard.add_hotkey("space", lambda: q.append(not q[0]))
     t0 = time.time()
     current_time = 0
     while True:
@@ -23,7 +25,7 @@ def timer(dt=0.01):
             t0 = ct
         else:
             current_time += ct - t0
-            print(rgb_string(f"\r{current_time:.3f} secs", color=GREEN), end='')
+            print(rgb_string(f"\r{current_time:.3f} secs", color=GREEN), end="")
             t0 = ct
-        if keyboard.is_pressed('q'):
+        if keyboard.is_pressed("q"):
             break

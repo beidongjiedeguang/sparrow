@@ -1,9 +1,9 @@
 import numpy as np
 import Levenshtein  # pip install python-Levenshtein
 
-'''
+"""
 Some common distance function
-'''
+"""
 
 
 def euclidean_dist(vec1, vec2):

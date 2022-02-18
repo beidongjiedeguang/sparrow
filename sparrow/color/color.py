@@ -11,7 +11,7 @@ def color_to_rgb(color):
     elif isinstance(color, (tuple, list, np.ndarray)):
 
         if isinstance(color[0], (int, np.int32, np.int64)):
-            return np.array(color)/255
+            return np.array(color) / 255
         elif isinstance(color[0], (float, np.float32, np.float64)):
             return np.array(color)
         else:
@@ -48,10 +48,7 @@ def hex_to_rgb(hex_code):
     hex_part = hex_code[1:]
     if len(hex_part) == 3:
         hex_part = "".join([2 * c for c in hex_part])
-    return np.array([
-        int(hex_part[i:i + 2], 16) / 255
-        for i in range(0, 6, 2)
-    ])
+    return np.array([int(hex_part[i : i + 2], 16) / 255 for i in range(0, 6, 2)])
 
 
 def invert_color(color):
@@ -59,7 +56,7 @@ def invert_color(color):
 
 
 def color_to_int_rgb(color):
-    return (255 * color_to_rgb(color)).astype('uint8')
+    return (255 * color_to_rgb(color)).astype("uint8")
 
 
 def color_to_int_rgba(color, opacity=1.0):
@@ -69,4 +66,3 @@ def color_to_int_rgba(color, opacity=1.0):
 
 def random_color():
     return Color(rgb=[np.random.random() for _ in range(3)])
-
