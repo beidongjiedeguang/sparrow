@@ -10,7 +10,3 @@ def rel_to_abs(rel_path: str, use_parent=False):
         f = f.f_back
     current_path = Path(f.f_code.co_filename).parent
     return current_path / rel_path
-
-
-if __name__ == "__main__":
-    print(rel_to_abs("../emmm"))
