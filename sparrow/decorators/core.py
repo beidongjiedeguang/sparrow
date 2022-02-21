@@ -1,4 +1,4 @@
-from ..string.color_string import rgb_string, GREEN, RED, BLUE
+from ..string.color_string import rgb_string, color_const
 from functools import wraps, update_wrapper
 import logging
 import inspect
@@ -57,8 +57,8 @@ def test_time(times=10):
             time_str = f"{average_cost_time:.3f}"
 
             print(
-                f"Run {rgb_string(str(times), GREEN)} times, "
-                f"the average time is {rgb_string(time_str, GREEN)} seconds."
+                f"Run {rgb_string(str(times), color_const.GREEN)} times, "
+                f"the average time is {rgb_string(time_str, color_const.GREEN)} seconds."
             )
             return func(*args, **kwargs)
 
@@ -78,7 +78,7 @@ def benchmark(func):
         cost_time = end - start
         time_str = f"{cost_time:.3f}"
         print(
-            f"Finished {rgb_string(func.__name__, RED)} in {rgb_string(time_str, GREEN)} secs."
+            f"Finished {rgb_string(func.__name__, color_const.RED)} in {rgb_string(time_str, color_const.GREEN)} secs."
         )
         return value
 
