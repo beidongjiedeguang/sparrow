@@ -1,5 +1,4 @@
-from ..color import color_to_int_rgb
-from ..color.constant import *
+from ..color import color_to_int_rgb, color_const
 
 CSI = "\033["
 OSC = "\033]"
@@ -34,7 +33,7 @@ def _rgb_str(string, RGB_fore=(240, 85, 85), SRG=0, RGB_back=None):
     return __set_rgb(RGB_fore, SRG, RGB_back) + string + OFF
 
 
-def rgb_string(string, color=RED, **kwargs):
+def rgb_string(string, color=color_const.RED, **kwargs):
     """Return the string with color.
     :param string: The string will be colored.
     :param color: can be rgb list [255, 255, 255]  or hex string "#ffffff".

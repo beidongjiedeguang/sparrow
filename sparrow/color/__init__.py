@@ -1,2 +1,2 @@
 from .color import *
-from .constant import *
+from . import constant as color_const

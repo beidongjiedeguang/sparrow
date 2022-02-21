@@ -1,6 +1,6 @@
 from colour import Color
 import numpy as np
-from .constant import *
+from . import constant as _color_const
 
 
 def color_to_rgb(color):
@@ -29,7 +29,7 @@ def rgb_to_color(rgb):
     try:
         return Color(rgb=rgb)
     except ValueError:
-        return Color(WHITE)
+        return Color(_color_const.WHITE)
 
 
 def rgba_to_color(rgba):
