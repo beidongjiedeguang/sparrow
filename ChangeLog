@@ -1,9 +1,126 @@
 CHANGES
 =======
 
+v0.4.18
+-------
+
+* [Upgrade] Bump version (0.4.17 -> 0.4.18)
+* Fix color space
+
+v0.4.17
+-------
+
+* [Upgrade] Bump version (0.4.16 -> 0.4.17)
+* 添加attention实现
+* 增加颜色常量
+* Add conftest.py
+* black refactor
+* Update tests
+* clean code
+* Add repeat function
+* cmd run function
+* Update python-publish.yml
+
+v0.4.16
+-------
+
+* [Upgrade] Bump version (0.4.15 -> 0.4.16)
+* refactor
+* set default release to \`draft\`
+
+v0.4.15
+-------
+
+* [Upgrade] Bump version (0.4.14 -> 0.4.15)
+
+v0.4.14
+-------
+
+* [Upgrade] Bump version (0.4.13 -> 0.4.14)
+
+v0.4.13
+-------
+
+* [Upgrade] Bump version (0.4.12 -> 0.4.13)
+* update
+* ignore tag to release
+
+v0.4.12
+-------
+
+* [Upgrade] Bump version (0.4.11 -> 0.4.12)
+* update
+
+v0.4.11
+-------
+
+* [Upgrade] Bump version (0.4.10-> 0.4.11)
+* update
+
+v0.4.9
+------
+
+* [Upgrade] Version bump to [0.4.9]
+* fixed
+
+v0.4.8
+------
+
+* [Upgrade] Version bump to [0.4.8]
+* update
+
+v0.4.7
+------
+
+* [Upgrade] Version bump to [0.4.7]
+* update
+
+v0.4.6
+------
+
+* [Upgrade] Version bump to [0.4.6]
+* update
+* delete invalid field
+* Fixed
+
+v0.4.5
+------
+
+* [Upgrade] Version bump to [0.4.5]
+
+v0.4.4
+------
+
+* [Upgrade] Version bump to [0.4.4]
+* fix depandency
+
+v0.4.3
+------
+
+* [Upgrade] Version bump to [0.4.3]
+
+v0.4.2
+------
+
+* [Upgrade] Version bump to [0.4.2]
+* [Upgrade] Version bump to [0.4.2]
+* place hold
+* Add test
+* Add run\_tests.yml
+* move out tests/ from ignore
+* update
+* Fix Changelog url
+
+v0.4.1
+------
+
+* [Upgrade] Version bump to [0.4.1]
+* set published true
+
 v0.4.0
 ------
 
+* [Upgrade] Version bump to [0.4.0]
 * [Upgrade] Version bump to [0.4.0]
 * fix tag
 * [Upgrade] Version bump to [0.4.0]

@@ -9,7 +9,12 @@
 ## Install
 ```bash
 pip install sparrow-tool
+pip install sparrow-tool[dev]
+
+pip install -e .
+pip install -e .[dev]
 ```
+
 
 ## Usage
 

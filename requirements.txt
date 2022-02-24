@@ -1,0 +1,11 @@
+pyyaml
+numpy
+colour
+pendulum
+twine
+cn2an
+colorlog
+concurrent-log-handler
+Deprecated
+fire
+Faker>=13.0.0
