@@ -1,7 +1,8 @@
 import keyboard
 import time
 from collections import deque
-from sparrow.string.color_string import rgb_string, GREEN, TEAL
+from sparrow.string.color_string import rgb_string
+from sparrow.color.constant import TEAL, GREEN
 
 
 def timer(dt=0.01):
