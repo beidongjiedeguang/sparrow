@@ -1,6 +1,9 @@
 CHANGES
 =======
 
+* Fix namespace error
+* Improve configuration file
+
 v0.4.19
 -------
 
