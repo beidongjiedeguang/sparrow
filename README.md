@@ -9,9 +9,11 @@
 ## Install
 ```bash
 pip install sparrow-tool
+# Or dev version
 pip install sparrow-tool[dev]
-
+# Or
 pip install -e .
+# Or
 pip install -e .[dev]
 ```
 
