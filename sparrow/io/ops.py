@@ -4,8 +4,8 @@ import shutil
 from glob import glob
 from sparrow.path import rel_to_abs
 from deprecated import deprecated
-from .core import broadcast
 import pickle
+from .core import broadcast
 
 
 @broadcast
