@@ -9,3 +9,5 @@ concurrent-log-handler
 Deprecated
 fire
 Faker>=13.0.0
+ml-collections>=0.1.1
+rich
