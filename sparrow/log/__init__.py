@@ -1,1 +1,1 @@
-from .core import Logger
+from .core import Logger, SimpleLogger
