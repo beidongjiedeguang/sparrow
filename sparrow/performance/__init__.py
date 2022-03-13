@@ -17,11 +17,16 @@ class TestTime:
 
     def show_interval(self):
         self._cost_time = time.time() - self._start_time
-        self._show_cost()
         self._start_time = time.time()
+        self._show_cost()
+        return self.get_cost()
+
+    def get_cost(self):
+        return f"{self._cost_time:.5f}"
 
     def _show_cost(self):
-        cost_time = rgb_string(f"{self._cost_time:.3f}", color=color_const.GREEN)
-        show_string = f"cost time: {cost_time}s"
+        cost_time = self.get_cost()
+        rgb_cost_time = rgb_string(cost_time, color=color_const.GREEN)
+        show_string = f"cost time: {rgb_cost_time}s"
         print(show_string)
 
