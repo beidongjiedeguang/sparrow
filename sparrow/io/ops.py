@@ -50,7 +50,7 @@ def load(filename):
 
 
 def yaml_dump(filepath, data, rel_path=False):
-    abs_path = rel_to_abs(filepath, use_parent=True) if rel_path else filepath
+    abs_path = rel_to_abs(filepath, parents=1) if rel_path else filepath
     from yaml import dump
 
     try:
@@ -62,7 +62,7 @@ def yaml_dump(filepath, data, rel_path=False):
 
 
 def yaml_load(filepath, rel_path=False):
-    abs_path = rel_to_abs(filepath, use_parent=True) if rel_path else filepath
+    abs_path = rel_to_abs(filepath, parents=1) if rel_path else filepath
     from yaml import load
 
     try:
