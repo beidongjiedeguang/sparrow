@@ -14,13 +14,14 @@ from ..inspect import get_func_param_dict
 
 class BaseLogger(metaclass=abc.ABCMeta):
     _saved_loggers = {}
+    _subclass = None
 
     @classmethod
     def get_logger(cls, name, **kwargs):
         if name in cls._saved_loggers:
             return cls._saved_loggers[name]
         else:
-            return Logger(name=name, **kwargs)
+            return cls._subclass(name=name, **kwargs)
 
     @abc.abstractmethod
     def debug(self, *msg, sep=" ", **kwargs):
@@ -58,7 +59,6 @@ class BaseLogger(metaclass=abc.ABCMeta):
         log_dir = log_path.parent
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
-        # logger = logging.getLogger(name)
         logger = logging.Logger(name, level=level)
 
         file_formatter = logging.Formatter(
@@ -81,9 +81,6 @@ class BaseLogger(metaclass=abc.ABCMeta):
         logger.addHandler(file_handler)
 
         if stream:
-            # stream_handler = logging.StreamHandler()
-            # stream_handler.setFormatter(stream_formatter)
-            # logger.addHandler(stream_handler)
             logger.addHandler(RichHandler())
         # logger.setLevel(level)
         return logger
@@ -95,11 +92,12 @@ class SimpleLogger(BaseLogger):
             self,
             name="name",
             log_dir="./logs",
-            multi_process=True,
             print_stream=True,
             level=logging.DEBUG,
+            multi_process=False,
             tz_is_china=True,
     ):
+        self._subclass = SimpleLogger
         if tz_is_china:
             logging.Formatter.converter = lambda sec, what: (
                     datetime.datetime.now(tz=datetime.timezone.utc)
@@ -145,7 +143,6 @@ class Logger(BaseLogger):
 
     """
 
-    # _saved_loggers = {}
     def __init__(
             self,
             name="name",
@@ -170,7 +167,7 @@ class Logger(BaseLogger):
             tz_is_china: bool
                 time zone is China or not
         """
-
+        self._subclass = Logger
         if tz_is_china:
             logging.Formatter.converter = lambda sec, what: (
                     datetime.datetime.now(tz=datetime.timezone.utc)
@@ -239,36 +236,3 @@ class Logger(BaseLogger):
                 self._debug_logger.error(msg, **kwargs)
                 self._info_logger.error(msg, **kwargs)
                 self._warining_logger.error(msg, **kwargs)
-
-# class SingletonLogger(Logger, metaclass=MetaSingleton):
-#     def __init__(
-#             self,
-#             name="name",
-#             log_dir="./logs",
-#             debug_path="debug.log",
-#             info_path="info.log",
-#             warning_path="warn.log",
-#             error_path="error.log",
-#             multi_process=True,
-#             print_debug=False,
-#             print_info=False,
-#             print_warning=False,
-#             print_error=False,
-#             single_mode=False,
-#             level=logging.DEBUG,
-#             tz_is_china=True,
-#     ):
-#         loc = get_func_param_dict()
-#         loc.pop('self')
-#         self._loc = loc
-#         super().__init__(**loc)
-#
-#     @classmethod
-#     def getLogger(cls):
-#         """SingletonLogger is singleton，this is equivalent to using Logger () directly"""
-#         return cls()
-#
-#     def copy(self):
-#         new_logger = object.__new__(SingletonLogger)
-#         new_logger.__init__(**self._loc)
-#         return new_logger
