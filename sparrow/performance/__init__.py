@@ -1,10 +1,10 @@
 import time
 from ..string.color_string import rgb_string, color_const
 
-__all__ = ['TestTime']
+__all__ = ['MeasureTime']
 
 
-class TestTime:
+class MeasureTime:
     def __init__(self):
         self._cost_time = None
         self._start_time = None
@@ -22,11 +22,11 @@ class TestTime:
         return self.get_cost()
 
     def get_cost(self):
-        return f"{self._cost_time:.5f}"
+        return round(self._cost_time, 5)
 
     def _show_cost(self):
         cost_time = self.get_cost()
-        rgb_cost_time = rgb_string(cost_time, color=color_const.GREEN)
+        rgb_cost_time = rgb_string(str(cost_time), color=color_const.GREEN)
         show_string = f"cost time: {rgb_cost_time}s"
         print(show_string)
 
