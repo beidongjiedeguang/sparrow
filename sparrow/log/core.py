@@ -14,14 +14,10 @@ from ..inspect import get_func_param_dict
 
 class BaseLogger(metaclass=abc.ABCMeta):
     _saved_loggers = {}
-    _subclass = None
 
-    @classmethod
-    def get_logger(cls, name, **kwargs):
-        if name in cls._saved_loggers:
-            return cls._saved_loggers[name]
-        else:
-            return cls._subclass(name=name, **kwargs)
+    @abc.abstractmethod
+    def get_logger(self, name, **kwargs):
+        pass
 
     @abc.abstractmethod
     def debug(self, *msg, sep=" ", **kwargs):
@@ -97,7 +93,6 @@ class SimpleLogger(BaseLogger):
             multi_process=False,
             tz_is_china=True,
     ):
-        self._subclass = SimpleLogger
         if tz_is_china:
             logging.Formatter.converter = lambda sec, what: (
                     datetime.datetime.now(tz=datetime.timezone.utc)
@@ -109,6 +104,13 @@ class SimpleLogger(BaseLogger):
             f"debug-{name}", log_path, level=level, stream=print_stream, multi_process=multi_process
         )
         self._saved_loggers[name] = self
+
+    @classmethod
+    def get_logger(cls, name, **kwargs) -> "SimpleLogger":
+        if name in cls._saved_loggers:
+            return cls._saved_loggers[name]
+        else:
+            return cls(name=name, **kwargs)
 
     def debug(self, *msg, sep=" ", **kwargs):
         currentframe = inspect.currentframe()
@@ -167,7 +169,6 @@ class Logger(BaseLogger):
             tz_is_china: bool
                 time zone is China or not
         """
-        self._subclass = Logger
         if tz_is_china:
             logging.Formatter.converter = lambda sec, what: (
                     datetime.datetime.now(tz=datetime.timezone.utc)
@@ -203,6 +204,13 @@ class Logger(BaseLogger):
         self._single_mode = single_mode
         self._level = level
         self._saved_loggers[name] = self
+
+    @classmethod
+    def get_logger(cls, name, **kwargs) -> "Logger":
+        if name in cls._saved_loggers:
+            return cls._saved_loggers[name]
+        else:
+            return cls(name=name, **kwargs)
 
     def debug(self, *msg, sep=" ", **kwargs):
         currentframe = inspect.currentframe()
