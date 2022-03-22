@@ -1,4 +1,3 @@
-import colorlog
 import logging
 from logging.handlers import RotatingFileHandler
 from concurrent_log_handler import ConcurrentRotatingFileHandler
@@ -8,8 +7,6 @@ from pathlib import Path
 import datetime
 import abc
 from rich.logging import RichHandler
-from ..decorators.core import MetaSingleton
-from ..inspect import get_func_param_dict
 
 
 class BaseLogger(metaclass=abc.ABCMeta):
