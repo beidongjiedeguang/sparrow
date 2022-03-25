@@ -12,16 +12,15 @@ def run(cmd, **env):
     p.communicate()
     return p.returncode
 
-# install dependencies
 dependencies = [
     'pytest',
     'numpy',
     'einops'
-    # 'parameterized',
+    'parameterized',
 ]
 
 assert 0 == run('pip install {} --progress-bar off'.format(' '.join(dependencies)))
-# install sparrow-tool
+
 assert 0 == run('pip install -e .')
 
-assert 0 == run('pytest tests')
+assert 0 == run('pytest tests/ -vs')
