@@ -1,4 +1,5 @@
 from ..string.color_string import rgb_string, color_const
+from ..log.core import BaseLogger, SimpleLogger
 from functools import wraps, update_wrapper
 import logging
 import inspect
@@ -43,46 +44,51 @@ def try_decorator(error_return=None):
     return decorator
 
 
-def test_time(times=10):
+def benchmark(logger: SimpleLogger, level=logging.INFO, times=10):
     # if func is None:
     #     return partial(time_it, times=times)
     def decorate(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
             start = time.time()
+            value = None
             for i in range(times):
-                func(*args, **kwargs)
+                value = func(*args, **kwargs)
             end = time.time()
             average_cost_time = (end - start) / times
             time_str = f"{average_cost_time:.3f}"
 
-            print(
+            logger.log(
+                level,
                 f"Run {rgb_string(str(times), color_const.GREEN)} times, "
                 f"the average time is {rgb_string(time_str, color_const.GREEN)} seconds."
             )
-            return func(*args, **kwargs)
+            return value
 
         return wrapper
 
     return decorate
 
 
-def benchmark(func):
-    """Log the runtime of the decorated function."""
+def measure_time(logger: SimpleLogger, level=logging.INFO):
+    def decorate(func):
+        """Log the runtime of the decorated function."""
 
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        start = time.time()
-        value = func(*args, **kwargs)
-        end = time.time()
-        cost_time = end - start
-        time_str = f"{cost_time:.3f}"
-        print(
-            f"Finished {rgb_string(func.__name__, color_const.RED)} in {rgb_string(time_str, color_const.GREEN)} secs."
-        )
-        return value
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            start = time.time()
+            value = func(*args, **kwargs)
+            end = time.time()
+            cost_time = end - start
+            time_str = f"{cost_time:.3f}"
+            logger.log(level,
+                       f"Finished {rgb_string(func.__name__, color_const.RED)} in {rgb_string(time_str, color_const.GREEN)} secs."
+                       )
+            return value
 
-    return wrapper
+        return wrapper
+
+    return decorate
 
 
 def repeat(n=2):
