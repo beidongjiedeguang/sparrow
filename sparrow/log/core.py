@@ -103,11 +103,27 @@ class SimpleLogger(BaseLogger):
         self._saved_loggers[name] = self
 
     @classmethod
-    def get_logger(cls, name, **kwargs) -> "SimpleLogger":
+    def get_logger(cls,
+                   name,
+                   log_dir="./logs",
+                   print_stream=True,
+                   level=logging.DEBUG,
+                   multi_process=False,
+                   tz_is_china=True) -> "SimpleLogger":
         if name in cls._saved_loggers:
             return cls._saved_loggers[name]
         else:
-            return cls(name=name, **kwargs)
+            return cls(name,
+                       log_dir=log_dir,
+                       print_stream=print_stream,
+                       level=level,
+                       multi_process=multi_process,
+                       tz_is_china=tz_is_china)
+
+    def log(self, level, *msg, sep=" ", **kwargs):
+        currentframe = inspect.currentframe()
+        msg = self._get_format_msg(currentframe, msg, logging.getLevelName(level), sep=sep)
+        self._logger.log(level, msg, **kwargs)
 
     def debug(self, *msg, sep=" ", **kwargs):
         currentframe = inspect.currentframe()
