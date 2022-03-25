@@ -17,6 +17,7 @@ dependencies = [
     'numpy',
     'einops',
     'parameterized',
+    'fastapi',
 ]
 
 assert 0 == run('pip install {} --progress-bar off'.format(' '.join(dependencies)))
