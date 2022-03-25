@@ -1,12 +1,10 @@
 import logging
-
 from sparrow.log.core import Logger, SimpleLogger
 from sparrow import yaml_load
 from sparrow import rel_to_abs
 import time
 # import logging
 # from logtest1 import func1
-from fastapi import FastAPI
 from multiprocessing import Process, context
 import multiprocessing
 
