@@ -1,6 +1,57 @@
 CHANGES
 =======
 
+v0.4.26
+-------
+
+* [Upgrade] Bump version (0.4.25 -> 0.4.26)
+* clean code
+
+v0.4.25
+-------
+
+* [Upgrade] Bump version (0.4.24 -> 0.4.25)
+* Fix get\_logger error
+
+v0.4.24
+-------
+
+* [Upgrade] Bump version (0.4.23 -> 0.4.24)
+* Fixed subclass inheritance error
+* add rel\_to\_abs
+* Make parameter \`parent\` more flexible
+* Rename TestTime -> MeasureTime
+* test
+* add orjson
+
+v0.4.23
+-------
+
+* [Upgrade] Bump version (0.4.22 -> 0.4.23)
+* improve
+
+v0.4.22
+-------
+
+* [Upgrade] Bump version (0.4.21 -> 0.4.22)
+* add SimpleLogger to here
+* Add performance module
+
+v0.4.21
+-------
+
+* [Upgrade] Bump version (0.4.20 -> 0.4.21)
+
+v0.4.20
+-------
+
+* [Upgrade] Bump version (0.4.19 -> 0.4.20)
+* update
+* fix missing package
+* add function \`get\_func\_param\_dict\`
+* Delete SingletonLogger & add SimpleLogger
+* Update README
+* Update
 * Fix namespace error
 * Improve configuration file
 
@@ -107,11 +158,11 @@ v0.4.3
 ------
 
 * [Upgrade] Version bump to [0.4.3]
+* [Upgrade] Version bump to [0.4.2]
 
 v0.4.2
 ------
 
-* [Upgrade] Version bump to [0.4.2]
 * [Upgrade] Version bump to [0.4.2]
 * place hold
 * Add test
@@ -125,11 +176,11 @@ v0.4.1
 
 * [Upgrade] Version bump to [0.4.1]
 * set published true
+* [Upgrade] Version bump to [0.4.0]
 
 v0.4.0
 ------
 
-* [Upgrade] Version bump to [0.4.0]
 * [Upgrade] Version bump to [0.4.0]
 * fix tag
 * [Upgrade] Version bump to [0.4.0]
