@@ -15,7 +15,7 @@ def run(cmd, **env):
 dependencies = [
     'pytest',
     'numpy',
-    'einops'
+    'einops',
     'parameterized',
 ]
 
