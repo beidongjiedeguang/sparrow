@@ -1,4 +1,6 @@
-from sparrow.log.core import Logger, MetaSingleton, SimpleLogger
+import logging
+
+from sparrow.log.core import Logger, SimpleLogger
 from sparrow import yaml_load
 from sparrow import rel_to_abs
 import time
@@ -16,6 +18,11 @@ def test_simple_log():
     logger2 = SimpleLogger.get_logger(name="train-log", )
     print(id(logger2) == id(logger))
     assert (id(logger2) == id(logger))
+
+
+def test_simplelog_log():
+    logger = SimpleLogger.get_logger("emmm")
+    logger.log(logging.DEBUG, "hahahhah")
 
 
 def test_logger():
