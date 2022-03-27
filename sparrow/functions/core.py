@@ -4,11 +4,21 @@ import numpy as np
 import operator as op
 import random
 import time
+import pandas as pd
 
-__all__ = ["topk", "random_idx", "clamp", "get_num_args", "get_parameters"]
+__all__ = ["topk", "dict_topk", "random_idx", "clamp", "get_num_args", "get_parameters"]
+
+
+def dict_topk(a: dict, k: int, reverse=False) -> pd.DataFrame:
+    df = pd.DataFrame({'key': a.keys(), 'value': a.values()})
+    if not reverse:
+        return df.nlargest(k, 'value')
+    else:
+        return df.nsmallest(k, 'value')
 
 
 def topk(a, k, axis=-1, largest=True, sort=True):
+    """Series top K"""
     a = np.asanyarray(a)
     if axis is None:
         axis_size = a.size
