@@ -1,6 +1,21 @@
 CHANGES
 =======
 
+v0.4.27
+-------
+
+* [Upgrade] Bump version (0.4.26 -> 0.4.27)
+* delete useless code
+* add fastapi
+* fix typo
+* update
+* Explicit kwargs
+* fix typo
+* Update ChangeLog
+* add keyboard
+* add pytest.ini
+* add tests
+
 v0.4.26
 -------
 
