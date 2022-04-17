@@ -30,3 +30,4 @@ def timer(dt=0.01):
             t0 = ct
         if keyboard.is_pressed("q"):
             break
+

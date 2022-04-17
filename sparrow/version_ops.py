@@ -12,7 +12,7 @@ class VersionControl:
         filename="version-config.yaml",
     ):
 
-        self.config = None
+        # self.config = None
         self._pkgname = pkgname
         self._config_path = os.path.join(pkgdir, filename)
         if version is None:
@@ -50,8 +50,7 @@ class VersionControl:
     def update_readme(
         self,
         readme_path="README.md",
-        requirements_path="requirements.txt",
-        license="GNU_GPL--v3",
+        license="MIT",
         author="kunyuan",
         replace_flag=19 * "-",
     ):
@@ -84,3 +83,8 @@ class VersionControl:
         rm("build", "dist", "eggs", f"{pkgname}.egg-info")
         os.system(f"pip uninstall {pkgname} -y && python setup.py install")
         rm("build", "dist", "eggs", f"{pkgname}.egg-info")
+
+    @staticmethod
+    def build():
+        os.system(f"pythom -m build")
+

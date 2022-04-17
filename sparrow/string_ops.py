@@ -1,5 +1,4 @@
 import re
-import cn2an
 
 
 def find_all_index(pattern, string, flags=0):

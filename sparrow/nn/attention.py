@@ -7,6 +7,14 @@ from einops import rearrange, reduce, asnumpy, parse_shape
 from einops.layers.torch import Rearrange, Reduce
 
 
+def attention_origin(q, k, v):
+    """
+    attention(q, k, v) = softmax( (q  k.T) / sqrt(dk) )  v
+    """
+    # for pytorch
+    s = q.shape[-1] ** -0.5
+    return (q @ k.t() * s).softmax(dim=-1) @ v
+
 def attention(K, V, Q):
     _, n_channels, _ = K.shape
     A = torch.einsum('bct,bcl->btl', [K, Q])
