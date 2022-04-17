@@ -1,5 +1,6 @@
 from sparrow.version_ops import VersionControl
-from git import Repo
+from git.repo import Repo
+
 
 pkgname = "sparrow_tool"
 pkgdir = "sparrow"
@@ -9,7 +10,7 @@ old_version = vc.config['version']
 
 vc.update_version()
 new_version = vc.config['version']
-vc.update_readme()
+vc.update_readme(license='MIT')
 # os.system("black ./sparrow")
 # vc.upload_pypi()
 
