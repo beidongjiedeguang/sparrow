@@ -3,8 +3,69 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
+import einops
 from einops import rearrange, reduce, asnumpy, parse_shape
 from einops.layers.torch import Rearrange, Reduce
+from torch import einsum
+
+
+def check_shape(tensor, pattern, **kwargs):
+    return einops.rearrange(tensor, f"{pattern} -> {pattern}", **kwargs)
+
+
+class ScaledDotProductAttention(nn.Module):
+    def __init__(self, d_out, d_k, d_v, h, dropout=0.1):
+        """
+        :param d_out: output dimension
+        :param d_k: dimension of key
+        :param d_v: dimension of value
+        :param h: number of heads
+        :param dropout: dropout rate
+        """
+        super(ScaledDotProductAttention, self).__init__()
+        self.d_out = d_out
+        self.d_k = d_k
+        self.d_v = d_v
+        self.h = h
+        self.dropout = nn.Dropout(dropout)
+
+        self.fc_q = nn.Linear(d_out, h * d_k)
+        self.fc_k = nn.Linear(d_out, h * d_k)
+        self.fc_v = nn.Linear(d_out, h * d_v)
+        self.fc_o = nn.Linear(h * d_v, d_out)
+
+        self.init_weights()
+
+    def init_weights(self):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                nn.init.xavier_uniform_(m.weight)
+                nn.init.constant_(m.bias, 0.0)
+            elif isinstance(m, nn.LayerNorm):
+                nn.init.constant_(m.weight, 1.0)
+                nn.init.constant_(m.bias, 0.0)
+            elif isinstance(m, nn.Dropout):
+                nn.init.constant_(m.weight, 1.0)
+                nn.init.constant_(m.bias, 0.0)
+            elif isinstance(m, nn.Conv2d):
+                nn.init.xavier_uniform_(m.weight)
+                nn.init.constant_(m.bias, 0.0)
+            elif isinstance(m, nn.BatchNorm2d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out')
+                nn.init.constant_(m.bias, 0.0)
+
+    def forward(self, queries, keys, values, mask=None, weights=None):
+        """
+        :param queries: (batch_size, nq, d_out)
+        :param keys: (batch_size, nk, d_out)
+        :param values: (batch_size, nk, d_out)
+        :param mask: (batch_size, h, nq, nk)
+        :param weights: (batch_size, h, nq, nk)
+        """
+        bs, nq = queries.shape[:2]
+        nk = keys.shape[1]
+
+        q = self.fc_q(queries)
 
 
 def attention_origin(q, k, v):
@@ -14,6 +75,7 @@ def attention_origin(q, k, v):
     # for pytorch
     s = q.shape[-1] ** -0.5
     return (q @ k.t() * s).softmax(dim=-1) @ v
+
 
 def attention(K, V, Q):
     _, n_channels, _ = K.shape
@@ -77,3 +139,32 @@ class Self_Attn_GAN(nn.Module):
         out = x + self.gamma * rearrange(out, 'b (h w) c -> b c h w',
                                          **parse_shape(x, 'b c h w'))
         return out, attention
+
+
+class KroneckerSelfAttention(nn.Module):
+    def __init__(self, dim, heads, dim_heads=32):
+        super().__init__()
+        hidden_dim = heads * dim_heads
+
+        self.heads = heads
+        self.to_qkv = nn.Conv1d(dim, hidden_dim * 3, 1, bias=False)
+        self.to_out = nn.Conv1d(hidden_dim, dim, 1)
+
+    def forward(self, x):
+        h = x.shape[-2]
+
+        x = torch.cat((x.mean(dim=-1), x.mean(dim=-2)), dim=-1)
+
+        qkv = self.to_qkv(x)
+        q, k, v = rearrange(qkv, 'b (qkv h d) n -> qkv b h d n', h=self.heads, qkv=3)
+
+        dots = einsum('bhdi,bhdj->bhij', q, k)
+        attn = dots.softmax(dim=-1)
+        out = einsum('bhij,bhdj->bhdi', attn, v)
+
+        out = rearrange(out, 'b h d n -> b (h d) n')
+        out = self.to_out(out)
+
+        # outer sum
+        out = rearrange(out[..., :h], 'b c (n 1) -> b c n 1') + rearrange(out[..., h:], 'b c (1 n) -> b c 1 n')
+        return out
