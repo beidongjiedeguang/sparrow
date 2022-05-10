@@ -1,6 +1,5 @@
 # from einops import rearrange, reduce
 import einops
-import numpy as np
 
 
 def repeat(tensor, n, axis=-1):

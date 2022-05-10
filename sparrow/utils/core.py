@@ -1,8 +1,5 @@
 from typing import MutableSet
-from typing import OrderedDict
 
-
-# Too slowly to can't be used in product.
 
 class OrderedSet(MutableSet):
 
@@ -65,26 +62,33 @@ class OrderedSet(MutableSet):
 
 if __name__ == "__main__":
     from sparrow.performance import MeasureTime
+    from ordered_set import OrderedSet as AnotherOrderedSet
     ms = MeasureTime()
+    list_a = [str(i) for i in range(3000)]
+
     ms.start()
-    list_a = range(3000)
-    print("list")
-    ms.show_interval()
     set_a = OrderedSet(list_a)
-    print("orderedset")
-    ms.show_interval()
+    ms.show_interval("orderedset")
+
+    set_aa = AnotherOrderedSet(list_a)
+    ms.show_interval("another orderedset")
+
     set_b = set(list_a)
-    print("set")
-    ms.show_interval()
-    res_1 = [list_a[i-1] in list_a for i in list_a]
-    print("list")
-    ms.show_interval()
-    res_2 = [list_a[i-1] in set_a for i in list_a]
-    print("orderedset")
-    ms.show_interval()
-    res_2 = [list_a[i-1] in set_b for i in list_a]
-    print("set")
-    ms.show_interval()
+    ms.show_interval('set')
+
+    print("*"*100)
+    res_1 = [i in list_a for i in list_a]
+    ms.show_interval("list")
+
+    res_2 = [i in set_a for i in list_a]
+    ms.show_interval('orderedset')
+
+    res_2 = [i in set_aa for i in list_a]
+    ms.show_interval('another orderedset')
+    res_2 = [i in set_b for i in list_a]
+    ms.show_interval("set")
+
+    print(res_2[:10])
 
 
 
