@@ -5,18 +5,24 @@ import logging
 import inspect
 import time
 import types
+from typing import Union
 
 
 class TryDecorator:
-    def __init__(self, error_return=None):
+    def __init__(self, error_return=None, logger: Union[SimpleLogger, None] = None):
         self.error_return = error_return
+        self.logger = logger
 
     def __call__(self, func):
         @wraps(func)
         def wrapper(*args, **kwargs):
             try:
                 result = func(*args, **kwargs)
-            except:
+            except Exception as e:
+                if self.logger:
+                    self.logger.warning(f"{func.__name__} raised an exception: {e}")
+                else:
+                    print(f"{func.__name__} raised an exception: {e}")
                 result = self.error_return
             return result
 
@@ -29,13 +35,17 @@ class TryDecorator:
             return types.MethodType(self, instance)
 
 
-def try_decorator(error_return=None):
+def try_decorator(error_return=None, logger: Union[SimpleLogger, None] = None):
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
             try:
                 value = func(*args, **kwargs)
-            except:
+            except Exception as e:
+                if logger:
+                    logger.warning(f"{func.__name__} error: {e}")
+                else:
+                    print(f"{func.__name__} error: {e}")
                 return error_return
             return value
 
@@ -44,7 +54,7 @@ def try_decorator(error_return=None):
     return decorator
 
 
-def benchmark(logger: SimpleLogger, level=logging.INFO, times=10):
+def benchmark(times=10, logger: Union[SimpleLogger, None] = None, level=logging.INFO, ):
     # if func is None:
     #     return partial(time_it, times=times)
     def decorate(func):
@@ -58,11 +68,17 @@ def benchmark(logger: SimpleLogger, level=logging.INFO, times=10):
             average_cost_time = (end - start) / times
             time_str = f"{average_cost_time:.3f}"
 
-            logger.log(
-                level,
-                f"Run {rgb_string(str(times), color_const.GREEN)} times, "
-                f"the average time is {rgb_string(time_str, color_const.GREEN)} seconds."
-            )
+            if logger:
+                logger.log(
+                    level,
+                    f"Run {rgb_string(str(times), color_const.GREEN)} times, "
+                    f"the average time is {rgb_string(time_str, color_const.GREEN)} seconds."
+                )
+            else:
+                print(
+                    f"Run {rgb_string(str(times), color_const.GREEN)} times, "
+                    f"the average time is {rgb_string(time_str, color_const.GREEN)} seconds."
+                )
             return value
 
         return wrapper
@@ -70,7 +86,7 @@ def benchmark(logger: SimpleLogger, level=logging.INFO, times=10):
     return decorate
 
 
-def measure_time(logger: SimpleLogger, level=logging.INFO):
+def measure_time(logger: Union[SimpleLogger, None] = None, level=logging.INFO):
     def decorate(func):
         """Log the runtime of the decorated function."""
 
@@ -81,9 +97,12 @@ def measure_time(logger: SimpleLogger, level=logging.INFO):
             end = time.time()
             cost_time = end - start
             time_str = f"{cost_time:.3f}"
-            logger.log(level,
-                       f"Finished {rgb_string(func.__name__, color_const.RED)} in {rgb_string(time_str, color_const.GREEN)} secs."
-                       )
+            if logger:
+                logger.log(level,
+                           f"Finished {rgb_string(func.__name__, color_const.RED)} in {rgb_string(time_str, color_const.GREEN)} secs."
+                           )
+            else:
+                print(f"Finished {rgb_string(func.__name__, color_const.RED)} in {rgb_string(time_str, color_const.GREEN)} secs.")
             return value
 
         return wrapper
