@@ -5,6 +5,7 @@ setuptools.setup(
     package_data={
         "sparrow": [
             '*.yaml', '*.yml',
+            'api/static/*'
         ],
     },
 )
