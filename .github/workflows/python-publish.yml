@@ -4,7 +4,8 @@ name: Upload Python Package
 
 on:
   release:
-    types: [published]
+    types: [push]
+#    types: [published]
 
 
 jobs:
@@ -18,40 +19,49 @@ jobs:
           - [ macos-10.15, macosx_* ]
 #          - [ windows-2019, win_amd64 ]
 #          - [ windows-2019, win32 ]
-        platform:
-          - "linux"
-          - "macos"
-          - "windows"
+#        platform:
+#          - "linux"
+#          - "macos"
+#          - "windows"
     runs-on: ${{ matrix.buildplat[0] }}
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: '3.x'
-#        python-version: ${{ matrix.python }}
-#        architecture: x64
-#    - name: Install dependencies
-#      run: |
-#        python -m pip install --upgrade pip
-#        pip install setuptools wheel twine build cibuildwheel==2.6.0
-    - name: Build
-      uses: pypa/cibuildwheel@v2.4.0
-      env:
-        CIBW_BUILD: ${{ matrix.python }}-${{ matrix.buildplat[1] }}
-#      run: |
-#        python -m cibuildwheel --output-dir wheelhouse
-#        python -m build
-#        twine upload dist/*.whl --skip-existing
-    - name: Upload wheels
-      env:
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-      run: |
-        twine upload --skip-existing wheelhouse/*.whl
-    - uses: actions/upload-artifact@v3
-      name: ${{ matrix.python }}-${{ matrix.buildplat[1] }}
-      with:
-        path: ./wheelhouse/*.whl
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          # versioneer.py requires the latest tag to be reachable. Here we
+          # fetch the complete history to get access to the tags.
+          # A shallow clone can work when the following issue is resolved:
+          # https://github.com/actions/checkout/issues/338
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+  #        python-version: ${{ matrix.python }}
+  #        architecture: x64
+  #    - name: Install dependencies
+  #      run: |
+  #        python -m pip install --upgrade pip
+  #        pip install setuptools wheel twine build cibuildwheel==2.6.0
+      - name: Build
+        uses: pypa/cibuildwheel@v2.4.0
+        env:
+          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.buildplat[1] }}
+  #      run: |
+  #        python -m cibuildwheel --output-dir wheelhouse
+  #        python -m build
+  #        twine upload dist/*.whl --skip-existing
+      - name: Upload wheels
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: |
+          echo "Uploading wheels to PyPI..."
+  #        twine upload --skip-existing wheelhouse/*.whl
+      - uses: actions/upload-artifact@v3
+        name: ${{ matrix.python }}-${{ matrix.buildplat[1] }}
+        with:
+          path: ./wheelhouse/*.whl
 
