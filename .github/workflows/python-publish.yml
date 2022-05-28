@@ -9,8 +9,8 @@ on:
 
 
 jobs:
-  deploy:
-
+  build_wheels:
+    name: Build wheel for Python Package
     strategy:
       matrix:
         python: ["cp38", "cp39"]#, "cp310", "pp38"] #, "pp39"]
