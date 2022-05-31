@@ -15,3 +15,4 @@ rich
 orjson
 ordered-set
 objprint
+attrs
