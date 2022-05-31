@@ -1,6 +1,7 @@
 import os
 from subprocess import Popen, PIPE
 from pathlib import Path
+from sparrow.multiprocess.config import Config
 
 
 def run(cmd, **env):
@@ -11,9 +12,10 @@ def run(cmd, **env):
 
 def start_server():
     server_dir = os.path.dirname(os.path.realpath(__file__))
-    print("start server")
+
     p = run(f"python {server_dir}/server.py")
-    print(p.returncode, p.pid)
+    print('pid:', p.pid)
+    print(f"service start at {Config()}")
     p.communicate()
     return p
 

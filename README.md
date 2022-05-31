@@ -32,3 +32,26 @@ print(id(logger2) == id(logger))
 >>> True
 ```
 
+### Multiprocessing SyncManager
+
+Open server first:
+```bash
+$ sparrow start-server
+```
+This will start service at address `0.0.0.0:50001`.
+
+(Process1) productor:
+```python
+from sparrow.multiprocess.client import Client
+client = Client()
+client.update_data({'a': 1, 'b': 2})
+```
+
+(Process2) consumer:
+```python
+from sparrow.multiprocess.client import Client
+client = Client()
+print(client.get_data())
+
+>>> {'a': 1, 'b': 2}
+```

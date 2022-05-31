@@ -1,4 +1,5 @@
 from sparrow.multiprocess.server import DataManager, QueueManager
+from sparrow.multiprocess.config import Config
 
 
 class Client:
@@ -12,7 +13,8 @@ class Client:
     >>> print(client.get_data())
     """
     def __init__(self):
-        manager = DataManager(address=('0.0.0.0', 50001), authkey=b'kunyuan')
+        server_config = Config()
+        manager = DataManager(address=(server_config.host, server_config.port), authkey=b'kunyuan')
         manager.connect()
         self._dict = manager.get_data()
 

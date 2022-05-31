@@ -11,6 +11,8 @@ class QueueManager(BaseManager):
 
 
 DictProxy = TypeVar('DictProxy')
+
+
 class DataManager(SyncManager):
     data = {}
 
@@ -21,5 +23,8 @@ class DataManager(SyncManager):
 QueueManager.register('get_queue', callable=lambda: QueueManager.queue)
 DataManager.register('get_data', callable=lambda: DataManager.data)
 if __name__ == "__main__":
-    manager = DataManager(address=('0.0.0.0', 50001), authkey=b'kunyuan')
+    from sparrow.multiprocess.config import Config
+
+    server_config = Config()
+    manager = DataManager(address=(server_config.host, server_config.port), authkey=b'kunyuan')
     manager.get_server().serve_forever()
