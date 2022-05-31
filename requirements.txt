@@ -4,7 +4,6 @@ numpy
 colour
 pendulum
 twine
-cn2an
 colorlog
 concurrent-log-handler
 Deprecated
@@ -15,3 +14,4 @@ ml-collections>=0.1.1
 rich
 orjson
 ordered-set
+objprint

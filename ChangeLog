@@ -2,6 +2,62 @@ CHANGES
 =======
 
 * update
+* [wip] websocket with protobuf
+* add web
+* update
+* update
+* update
+* update
+* update
+* update
+* update
+* update
+
+v0.5.7
+------
+
+* [Upgrade] Bump version (0.5.6 -> 0.5.7)
+* Add swagger static files
+
+v0.5.6
+------
+
+* [Upgrade] Bump version (0.5.5 -> 0.5.6)
+* Add logger option to some decorators
+* rename function
+
+v0.5.5
+------
+
+* [Upgrade] Bump version (0.5.4 -> 0.5.5)
+* Add multiprocessing shared variable
+* update
+
+v0.5.4
+------
+
+* [Upgrade] Bump version (0.5.3 -> 0.5.4)
+* Some trivial updates
+* add attention impl
+* add chinese simple to tradition convert module
+* geometry update
+* update requrements
+
+v0.5.3
+------
+
+* [Upgrade] Bump version (0.5.2 -> 0.5.3)
+
+v0.5.2
+------
+
+* [Upgrade] Bump version (0.5.1 -> 0.5.2)
+
+v0.5.1
+------
+
+* [Upgrade] Bump version (0.5.0 -> 0.5.1)
+* update
 
 v0.5.0
 ------
