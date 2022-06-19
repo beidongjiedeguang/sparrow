@@ -20,9 +20,9 @@ cleanup-public:
 	rm -rf public
 	mkdir -p public
 
-setup-development-environment:
-	npm install -g pnpm@7.1.6
-	pnpm install
+#setup-development-environment:
+#	npm install -g pnpm@7.1.6
+#	pnpm install
 
 $(LIBS_TO_BUILD_RULES): build-%: libs/%
 	pnpm --prefix $< build

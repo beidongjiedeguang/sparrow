@@ -5,10 +5,9 @@ package protostatus;
 message TrainStatus {
   bool finished = 1;
   int32 step = 2;
-  float loss = 3;
-  float progress = 4;
-  double cost_time = 5;
-  string msg = 6;
+  float progress = 3;
+  float loss = 4;
+  double time = 5;
   // timestamp 好像是protobuf里面的一个默认属性，用它会无法正常赋值。
 }
 

@@ -1,0 +1,38 @@
+syntax = "proto3";
+import "google/protobuf/struct.proto";
+
+package sparray;
+
+
+/**
+ * Represents a (quantized) dense n-dim array
+ */
+message DenseNdArrayProto {
+  // the actual array data, in bytes
+  bytes buffer = 1;
+
+  // the shape (dimensions) of the array
+  repeated uint32 shape = 2;
+
+  // the data type of the array
+  string dtype = 3;
+}
+
+
+message DocProto{
+  string id = 1;
+  oneof content {
+    // the raw binary content of this document
+    bytes blob = 2;
+
+    // the ndarray of the image/audio/video document
+    DenseNdArrayProto tensor = 3;
+
+    // a text document
+    string text = 4;
+  }
+}
+
+message DocArrayProto {
+    repeated DocProto docs = 1;
+}
