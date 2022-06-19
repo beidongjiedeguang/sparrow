@@ -1,14 +1,10 @@
-from sparrow.server.proto.python import trainstatus_pb2
+import os
+
+from sparrow.proto.python import trainstatus_pb2
 from sparrow import rel_to_abs
 
-
-# consumer
-def consumer():
-    state = trainstatus_pb2.TrainStatus()
-    with open(rel_to_abs("./proto/bin/train_state.bin"), "rb") as f:
-        state.ParseFromString(f.read())
-
-    print(state, type(state))
+if not os.path.exists('./bin'):
+    os.mkdir('./bin')
 
 
 # productor
@@ -20,5 +16,18 @@ def productor():
     state.progress = 0.5
     state.loss = 1.2
 
-    with open(rel_to_abs("./proto/bin/train_state.bin"), "wb") as f:
+    with open(rel_to_abs("./bin/train_state.bin"), "wb") as f:
         f.write(state.SerializeToString())
+
+
+# consumer
+def consumer():
+    state = trainstatus_pb2.TrainStatus()
+    with open(rel_to_abs("./bin/train_state.bin"), "rb") as f:
+        state.ParseFromString(f.read())
+
+    print(state, type(state))
+
+
+productor()
+consumer()
