@@ -17,7 +17,6 @@ manager = ConnectionManager()
 @app.websocket("/ws_chat")
 async def websocket_endpoint_chat(websocket: WebSocket):
     await manager.connect(websocket)
-    # await manager.broadcast()
     while True:
         byte_data = await websocket.receive_bytes()
         state.ParseFromString(byte_data)

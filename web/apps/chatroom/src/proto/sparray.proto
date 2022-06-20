@@ -21,16 +21,19 @@ message DenseNdArrayProto {
 
 message DocProto{
   string id = 1;
-  oneof content {
-    // the raw binary content of this document
-    bytes blob = 2;
-
-    // the ndarray of the image/audio/video document
-    DenseNdArrayProto tensor = 3;
-
-    // a text document
-    string text = 4;
-  }
+  bytes blob = 2;
+  string text = 3;
+  string dtype = 4;
+//  oneof content {
+//    // the raw binary content of this document
+//    bytes blob = 2;
+//
+//    // the ndarray of the image/audio/video document
+//    DenseNdArrayProto tensor = 3;
+//
+//    // a text document
+//    string text = 4;
+//  }
 }
 
 message DocArrayProto {

@@ -3,28 +3,81 @@ import * as protobuf from 'protobufjs';
 // let uniqueFile: SingleFile;
 let dataRes: any;
 // let filenameList: string[] = [];
+let Sparray: any;
 
-const uploadClipElement = document.getElementById('input-clip') as HTMLInputElement;
-const downloadClipElement = document.getElementById('download-clip') as HTMLInputElement;
-downloadClipElement.onclick = () => {
-    download(dataRes.name, dataRes.data, dataRes.type);
+function arraybuffer2base64(arraybuffer: Uint8Array){
+    let binary = '';
+    // let bytes = new Uint8Array(arraybuffer);
+    let bytes = arraybuffer;
+    for (let i =0; i < bytes.length; i++){
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
 }
-// add_event_listener()
-uploadClipElement.addEventListener('change', clipUpload, false);
-let socket = new WebSocket("ws://localhost:8000/ws");
-socket.binaryType = 'arraybuffer';
+
+protobuf.load('./proto/sparray.proto').then((root: any) => {
+    Sparray = root.lookupType("sparray.DocProto");
+
+    const uploadClipElement = document.getElementById('input-clip') as HTMLInputElement;
+    const downloadClipElement = document.getElementById('download-clip') as HTMLInputElement;
+    const imgElement = document.getElementById("image_preview") as any;
+
+    downloadClipElement.onclick = () => {
+        download(dataRes.name, dataRes.data, dataRes.type);
+    }
+
+    uploadClipElement.addEventListener('change', clipUpload, false);
+    let socket = new WebSocket("ws://localhost:8000/ws_tunnel");
+    socket.binaryType = 'arraybuffer';
+
+    socket.onmessage = async (event: MessageEvent) => {
+            console.log(`[message] Data received from server: ${event.data}`);
+
+            let arraybuffer = new Uint8Array(event.data);
+            const new_message = Sparray.decode(arraybuffer) as any;
+            console.log("接收到从python发来的数据：\n", new_message);
+            // const type = new_message.dtype;
+            // const blob = new Blob([new_message.data], {type});
+            // console.log(blob);
+            const url = arraybuffer2base64(new_message.blob);
+            console.log(url)
+            imgElement.src = 'data:image/jpeg;base64,'+url;
 
 
-function clipUpload() {
-    read_data(uploadClipElement.files!).then((res) => {
-        console.log(res);
-        dataRes = res;
-        protobuf.load('./proto/sparray.proto').then((root: any) => {
-            let Sparray = root.lookupType("sparray.DocProto");
+            // element.setAttribute('href', objUrl);
+            // element.setAttribute('download', filename);
+            // element.style.display = 'none';
+            // document.body.appendChild(element);
+
+
+            // // new_message.loss = Math.random();
+            // // new_message.time = date.getTime() / 1000;
+            // // new_message.time = 100;
+            // console.log("发送给python的数据: \n", new_message);
+            // let buffer = Sparray.encode(new_message).finish();
+            // socket.send(buffer);
+
+            // 添加到页面上
+            // charRoom!.innerHTML += `
+                // <strong>${JSON.stringify(new_message)}：</strong>
+            // `
+        };
+
+
+
+    function clipUpload() {
+        // preview_image(uploadClipElement.files!).then(res=>{
+        //         imgElement.src = res;
+        // });
+
+        read_data(uploadClipElement.files!).then((res) => {
+            console.log(res);
+            dataRes = res;
             const payload = {
                 'id': '1',
                 'blob': new Uint8Array(dataRes['data']),
-                // 'text': dataRes['name']
+                'text': dataRes['name'],
+                'dtype': dataRes['type']
             };
             console.log(dataRes);
 
@@ -37,14 +90,23 @@ function clipUpload() {
             const buffer = Sparray.encode(message).finish();
             socket.send(buffer);
 
-        })
-
+            })
+        }
     })
+
+function preview_image(files: HTMLInputElement['files']){
+    return new Promise((resolve, reject) => {
+        for (let i = 0; i < files!.length; i++) {
+            let item = files!.item(i)!;
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(item!);
+            fileReader.onload = (evt) => {
+                resolve(evt.target!.result);
+            }
+        }
+    });
 }
-
-
 function read_data(files: HTMLInputElement['files']) {
-    // return files;
     return new Promise((resolve, reject) => {
         for (let i = 0; i < files!.length; i++) {
             let item = files!.item(i)!;

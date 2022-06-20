@@ -42,15 +42,11 @@ export class DocProto extends jspb.Message {
   getBlob_asB64(): string;
   setBlob(value: Uint8Array | string): DocProto;
 
-  getTensor(): DenseNdArrayProto | undefined;
-  setTensor(value?: DenseNdArrayProto): DocProto;
-  hasTensor(): boolean;
-  clearTensor(): DocProto;
-
   getText(): string;
   setText(value: string): DocProto;
 
-  getContentCase(): DocProto.ContentCase;
+  getDtype(): string;
+  setDtype(value: string): DocProto;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DocProto.AsObject;
@@ -64,15 +60,8 @@ export namespace DocProto {
   export type AsObject = {
     id: string,
     blob: Uint8Array | string,
-    tensor?: DenseNdArrayProto.AsObject,
     text: string,
-  }
-
-  export enum ContentCase { 
-    CONTENT_NOT_SET = 0,
-    BLOB = 2,
-    TENSOR = 3,
-    TEXT = 4,
+    dtype: string,
   }
 }
 

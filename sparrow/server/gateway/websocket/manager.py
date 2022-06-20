@@ -5,7 +5,7 @@ from typing import List, Dict
 class ConnectionManager:
     def __init__(self):
         # 存放**的链接
-        self.active_connections: List[Dict[str, WebSocket]] = []
+        self.active_connections = []
 
     async def connect(self, ws: WebSocket, user: str=None):
         # 链接
@@ -15,14 +15,11 @@ class ConnectionManager:
         else:
             self.active_connections.append({"user": user, "ws": ws})
 
-
-
     def disconnect(self,  ws: WebSocket, user: str=None):
         if user is not None:
             self.active_connections.remove({"user": user, "ws": ws})
         else:
             self.active_connections.remove(ws)
-
 
     @staticmethod
     async def send_personal_message(message: str, ws: WebSocket):
@@ -36,7 +33,7 @@ class ConnectionManager:
                 if connection["user"] == user:
                     await connection['ws'].send_bytes(message)
             else:
-                await ws.send_bytes(message)
+                await connection.send_bytes(message)
 
     async def broadcast(self, data: bytes):
         for connection in self.active_connections:
