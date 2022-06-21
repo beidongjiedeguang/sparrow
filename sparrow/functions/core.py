@@ -1,10 +1,11 @@
-from functools import reduce
+from functools import partial, wraps, reduce
 import inspect
 import numpy as np
 import operator as op
 import random
 import time
 import pandas as pd
+from .utils import exists
 
 __all__ = ["topk", "dict_topk", "random_idx", "clamp", "get_num_args", "get_parameters"]
 
@@ -56,7 +57,7 @@ def random_idx(idx_range, exclude_idx=None):
         return rand_idx
 
 
-def clamp(x, x_min, x_max):
+def clamp(x, x_min=None, x_max=None):
     """Clamp a number to same range.
     Examples:
         >>> clamp(-1, 0, 1)
@@ -64,7 +65,12 @@ def clamp(x, x_min, x_max):
         >>> clamp([-1, 2, 3], [0, 0, 0], [1, 1, 1])
         >>> [0, 1, 1]
     """
-    return np.maximum(x_min, np.minimum(x_max, x))
+    assert exists(x_min) or exists(x_max)
+    if exists(x_min):
+        x = np.maximum(x, x_min)
+    if exists(x_max):
+        x = np.minimum(x, x_max)
+    return x
 
 
 CHOOSE_CACHE = {}
