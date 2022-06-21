@@ -1,4 +1,4 @@
-LIBS_TO_BUILD=chatroom body-controller
+LIBS_TO_BUILD=chatroom tunneling
 LIBS_TO_BUILD_RULES=$(addprefix build-,${LIBS_TO_BUILD})
 
 APPS_TO_BUILD=chatroom  
@@ -14,7 +14,7 @@ fix:
 
 build: $(LIBS_TO_BUILD_RULES)
 
-build-apps: cleanup-public $(APPS_TO_BUILD_RULES) build-xoo-editor
+build-apps: cleanup-public $(APPS_TO_BUILD_RULES)
 
 cleanup-public:
 	rm -rf public

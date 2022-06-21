@@ -17,7 +17,6 @@ def build_python():
         {proto_path} ")
 
 
-
 def build_web():
     # https://github.com/grpc/grpc-web
     javascript_out = os.path.join(proto_dir, 'js')
@@ -26,7 +25,7 @@ def build_web():
                                       "node_modules/.bin/protoc-gen-ts")
 
     def gen_web_1(proto_path):
-        # 可用
+        # 可
         os.system(f"protoc --proto_path={proto_dir} \
         --js_out=import_style=commonjs,binary:{javascript_out} \
         --ts_out={javascript_out} \
@@ -61,5 +60,14 @@ def build_web():
     shutil.copytree(f"{javascript_out}", web_proto_path)
 
 
+def copy_proto_to_web():
+    web_proto_path_list = glob(rel_to_abs('../../web/apps/*/src/proto', return_str=True))
+    for proto_path in proto_list:
+        [shutil.copy(proto_path, web_proto_path) for web_proto_path in web_proto_path_list]
+        # for web_proto_path in web_proto_path_list:
+        #     shutil.copy(proto_path, web_proto_path)
+
+
 build_python()
-build_web()
+# build_web()
+copy_proto_to_web()

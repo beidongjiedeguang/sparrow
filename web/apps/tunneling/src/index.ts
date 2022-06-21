@@ -16,7 +16,7 @@ function arraybuffer2base64(arraybuffer: Uint8Array){
 }
 
 protobuf.load('./proto/sparray.proto').then((root: any) => {
-    Sparray = root.lookupType("sparray.DocProto");
+    Sparray = root.lookupType("sparray.ChatProto");
 
     const uploadClipElement = document.getElementById('input-clip') as HTMLInputElement;
     const downloadClipElement = document.getElementById('download-clip') as HTMLInputElement;
@@ -36,7 +36,7 @@ protobuf.load('./proto/sparray.proto').then((root: any) => {
             let arraybuffer = new Uint8Array(event.data);
             const new_message = Sparray.decode(arraybuffer) as any;
             console.log("接收到从python发来的数据：\n", new_message);
-            const url = arraybuffer2base64(new_message.blob);
+            const url = arraybuffer2base64(new_message.buffer);
             // let imgEle =document.createElement('img') as any;
             // imgEle.src = 'data:image/png;base64,'+url;
             imgElement.src = 'data:image/png;base64,'+url;
@@ -75,7 +75,7 @@ protobuf.load('./proto/sparray.proto').then((root: any) => {
             dataRes = res;
             const payload = {
                 'id': '1',
-                'blob': new Uint8Array(dataRes['data']),
+                'buffer': new Uint8Array(dataRes['data']),
                 'text': dataRes['name'],
                 'dtype': dataRes['type']
             };

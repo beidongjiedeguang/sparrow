@@ -78,43 +78,20 @@
   <div class="chat-message">
     昵称：<input type="text" id="uName">
     输入消息：<input type="text" id="context">
-
     <button id="btn"> 点击发送消息 </button>
-    <div id="chatRoom"></div>
+
+    <!-- 发送文件：<input type="file" id="sendFile"> -->
+  </div>
+
+    <div
+      id="chatRoom"
+      style="color:#4b484b; position: fixed; left: 5%;top: 15%; z-index:100;"
+    ></div>
 
 
     <script src="./index.js"></script>
-  </div>
 
-  <!-- <script>
-    // 用户名
-    const uName = document.getElementById('uName')
-    // 文本框内容
-    const context = document.getElementById('context')
-    // 点击按钮
-    const btn = document.getElementById('btn')
-    
-    btn.onclick = function() {
-      // 将用户名和要发送的内容放在一个对象中，一起传送给后端
-      const values = {
-        uName: uName.value,
-        context: context.value
-      }
 
-      // 清空文本框的内容
-      uName.value = ''
-      context.value = ''
-
-      // 通过 websockte 发送消息
-      websocket.send(JSON.stringify(values))
-    }
-    </script> -->
-
-  <!-- <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-      <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-      <py-script>
-        print("Hello world emmm")
-      </py-script> -->
 </body>
 
 </html>

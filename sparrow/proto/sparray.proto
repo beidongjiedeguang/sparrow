@@ -21,7 +21,7 @@ message DenseNdArrayProto {
 
 message DocProto{
   string id = 1;
-  bytes blob = 2;
+  bytes buffer = 2;
   string text = 3;
   string dtype = 4;
 //  oneof content {
