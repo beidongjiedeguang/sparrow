@@ -85,3 +85,35 @@ export namespace DocArrayProto {
   }
 }
 
+export class ChatProto extends jspb.Message {
+  getName(): string;
+  setName(value: string): ChatProto;
+
+  getMsg(): string;
+  setMsg(value: string): ChatProto;
+
+  getBuffer(): Uint8Array | string;
+  getBuffer_asU8(): Uint8Array;
+  getBuffer_asB64(): string;
+  setBuffer(value: Uint8Array | string): ChatProto;
+
+  getDtype(): string;
+  setDtype(value: string): ChatProto;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ChatProto.AsObject;
+  static toObject(includeInstance: boolean, msg: ChatProto): ChatProto.AsObject;
+  static serializeBinaryToWriter(message: ChatProto, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ChatProto;
+  static deserializeBinaryFromReader(message: ChatProto, reader: jspb.BinaryReader): ChatProto;
+}
+
+export namespace ChatProto {
+  export type AsObject = {
+    name: string,
+    msg: string,
+    buffer: Uint8Array | string,
+    dtype: string,
+  }
+}
+

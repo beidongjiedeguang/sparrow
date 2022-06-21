@@ -15,13 +15,14 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rsparray.proto\x12\x07sparray\x1a\x1cgoogle/protobuf/struct.proto\"A\n\x11\x44\x65nseNdArrayProto\x12\x0e\n\x06\x62uffer\x18\x01 \x01(\x0c\x12\r\n\x05shape\x18\x02 \x03(\r\x12\r\n\x05\x64type\x18\x03 \x01(\t\"A\n\x08\x44ocProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04\x62lob\x18\x02 \x01(\x0c\x12\x0c\n\x04text\x18\x03 \x01(\t\x12\r\n\x05\x64type\x18\x04 \x01(\t\"0\n\rDocArrayProto\x12\x1f\n\x04\x64ocs\x18\x01 \x03(\x0b\x32\x11.sparray.DocProtob\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rsparray.proto\x12\x07sparray\x1a\x1cgoogle/protobuf/struct.proto\"A\n\x11\x44\x65nseNdArrayProto\x12\x0e\n\x06\x62uffer\x18\x01 \x01(\x0c\x12\r\n\x05shape\x18\x02 \x03(\r\x12\r\n\x05\x64type\x18\x03 \x01(\t\"A\n\x08\x44ocProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04\x62lob\x18\x02 \x01(\x0c\x12\x0c\n\x04text\x18\x03 \x01(\t\x12\r\n\x05\x64type\x18\x04 \x01(\t\"0\n\rDocArrayProto\x12\x1f\n\x04\x64ocs\x18\x01 \x03(\x0b\x32\x11.sparray.DocProto\"E\n\tChatProto\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\x0e\n\x06\x62uffer\x18\x03 \x01(\x0c\x12\r\n\x05\x64type\x18\x04 \x01(\tb\x06proto3')
 
 
 
 _DENSENDARRAYPROTO = DESCRIPTOR.message_types_by_name['DenseNdArrayProto']
 _DOCPROTO = DESCRIPTOR.message_types_by_name['DocProto']
 _DOCARRAYPROTO = DESCRIPTOR.message_types_by_name['DocArrayProto']
+_CHATPROTO = DESCRIPTOR.message_types_by_name['ChatProto']
 DenseNdArrayProto = _reflection.GeneratedProtocolMessageType('DenseNdArrayProto', (_message.Message,), {
   'DESCRIPTOR' : _DENSENDARRAYPROTO,
   '__module__' : 'sparray_pb2'
@@ -43,6 +44,13 @@ DocArrayProto = _reflection.GeneratedProtocolMessageType('DocArrayProto', (_mess
   })
 _sym_db.RegisterMessage(DocArrayProto)
 
+ChatProto = _reflection.GeneratedProtocolMessageType('ChatProto', (_message.Message,), {
+  'DESCRIPTOR' : _CHATPROTO,
+  '__module__' : 'sparray_pb2'
+  # @@protoc_insertion_point(class_scope:sparray.ChatProto)
+  })
+_sym_db.RegisterMessage(ChatProto)
+
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
@@ -52,4 +60,6 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _DOCPROTO._serialized_end=188
   _DOCARRAYPROTO._serialized_start=190
   _DOCARRAYPROTO._serialized_end=238
+  _CHATPROTO._serialized_start=240
+  _CHATPROTO._serialized_end=309
 # @@protoc_insertion_point(module_scope)

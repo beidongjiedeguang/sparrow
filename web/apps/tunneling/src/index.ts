@@ -36,12 +36,12 @@ protobuf.load('./proto/sparray.proto').then((root: any) => {
             let arraybuffer = new Uint8Array(event.data);
             const new_message = Sparray.decode(arraybuffer) as any;
             console.log("接收到从python发来的数据：\n", new_message);
-            // const type = new_message.dtype;
-            // const blob = new Blob([new_message.data], {type});
-            // console.log(blob);
             const url = arraybuffer2base64(new_message.blob);
-            console.log(url)
-            imgElement.src = 'data:image/jpeg;base64,'+url;
+            // let imgEle =document.createElement('img') as any;
+            // imgEle.src = 'data:image/png;base64,'+url;
+            imgElement.src = 'data:image/png;base64,'+url;
+            // document.appendChild(imgEle);
+            // imgElement.src = 'data:image/png;base64,'+url;
 
 
             // element.setAttribute('href', objUrl);

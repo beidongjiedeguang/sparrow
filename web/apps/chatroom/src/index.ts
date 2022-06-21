@@ -7,7 +7,7 @@ socket.binaryType = 'arraybuffer'
 // // 点击按钮
 let btn = document.getElementById('btn') as HTMLElement
 // 要显示聊天室的区域
-let charRoom = document.getElementById('charRoom')
+let chatRoom = document.getElementById('chatRoom')
 
 let chat_context: any;
 
@@ -19,85 +19,46 @@ func2()
 function func2() {
     const date = new Date();
 
-    protobuf.load('./proto/trainstatus.proto').then((root: any) => {
+    protobuf.load('./proto/sparray.proto').then((root: any) => {
 
-        let TrainState = root.lookupType("protostatus.TrainStatus");
+        let ChatProto = root.lookupType("sparray.ChatProto");
         let payload = {
-            "loss": 0.1,
-            "step": 100,
-            "progress": 0.99,
-            "finished": false,
-            "cost_time": date.getTime() / 1000,
+            "name": "you",
             "msg": "hello websocket"
         };
-        let errMsg = TrainState.verify(payload);
+        let errMsg = ChatProto.verify(payload);
         if (errMsg) {
             throw Error(errMsg);
         }
-        let message = TrainState.create(payload);
+        let message = ChatProto.create(payload);
         console.log(message);
+
         console.log(`message = ${JSON.stringify(message)}`);
 
-        let buffer = TrainState.encode(message).finish();
+        let buffer = ChatProto.encode(message).finish();
 
         socket.onopen = (e: Event) => {
             socket.send(buffer);
         };
     const context = document.getElementById('context') as any;
+    const contextUserName = document.getElementById('uName') as any;
 
     btn.onclick = function() {
-        // const hello = "Hello world"
-        // charRoom!.innerHTML += `
-        // <strong>${hello}</strong>
-        // `
-        // console.log("emmmmmmmmmmmmmm");
-        console.log(context.value);
-        chat_context = context.value;
-        const new_message = TrainState.decode(buffer);
+        const new_message = ChatProto.decode(buffer);
         new_message.msg = context.value;
-        buffer = TrainState.encode(new_message).finish();
+        new_message.name = contextUserName.value;
+        buffer = ChatProto.encode(new_message).finish();
         socket.send(buffer);
     }
-        // socket.onmessage = async (event: MessageEvent) => {
-        //     alert(`[message] Data received from server: ${event.data}`);
-        //     let arraybuffer = new Uint8Array(event.data);
-        //     const new_message = TrainState.decode(arraybuffer);
-
-        //     console.log("接收到从python发来的数据：\n", new_message);
-
-        //     new_message.finished = !new_message.finished;
-        //     new_message.loss = Math.random();
-        //     new_message.time = date.getTime() / 1000;
-        //     console.log("发送给python的数据: \n", new_message);
-        //     buffer = TrainState.encode(new_message).finish();
-        //     socket.send(buffer);
-
-        //     const messages = document.getElementById('messages')
-        //     let message = document.createElement('ele_one')
-        //     let content = document.createTextNode(event.data)
-        //     message.appendChild(content)
-        //     messages!.appendChild(message)
-        // };
 
         socket.onmessage = async (event: MessageEvent) => {
-            // alert(`[message] Data received from server: ${event.data}`);
             let arraybuffer = new Uint8Array(event.data);
-            const new_message = TrainState.decode(arraybuffer);
+            const new_message = ChatProto.decode(arraybuffer);
 
             console.log("接收到从python发来的数据：\n", new_message);
-
-            // new_message.finished = !new_message.finished;
-            // new_message.loss = Math.random();
             // new_message.time = date.getTime() / 1000;
-            new_message.time = 100;
-            console.log("发送给python的数据: \n", new_message);
-            buffer = TrainState.encode(new_message).finish();
-            // socket.send(buffer);
-
-            // 添加到页面上
-            charRoom!.innerHTML += `
-                <strong>${JSON.stringify(new_message)}：</strong>
-            `
+            chatRoom!.innerHTML += `<div>${new_message.name}: ${new_message.msg} </div>`;
+            // chatRoom!.innerHTML +=  `<strong>${JSON.stringify(new_message.msg)}</strong>`;
         };
 
         socket.onclose = function (event: CloseEvent) {

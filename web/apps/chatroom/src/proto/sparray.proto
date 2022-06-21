@@ -39,3 +39,10 @@ message DocProto{
 message DocArrayProto {
     repeated DocProto docs = 1;
 }
+
+message ChatProto {
+  string name = 1;
+  string msg = 2;
+  bytes buffer = 3;
+  string dtype = 4;
+}
