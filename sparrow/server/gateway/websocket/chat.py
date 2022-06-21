@@ -30,7 +30,7 @@ async def chat(websocket: WebSocket):
             while True:
                 byte_data = await websocket.receive_bytes()
                 chatproto.ParseFromString(byte_data)
-                print("接收到从ts来的数据: ", chatproto)
+                # print("接收到从ts来的数据: ", chatproto)
                 await manager.broadcast(chatproto.SerializeToString())
         except WebSocketDisconnect:
             manager.disconnect(websocket, sender)
@@ -69,4 +69,14 @@ def register_user(user: RegisterValidator, response: Response):
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("chat:app", host="0.0.0.0", port=8000, reload=True)
+    local = True
+    if local:
+        host = "0.0.0.0"
+        port = 8000
+        reload = True
+    else:
+        host = "192.168.61.230"
+        port = 51220
+        reload = False
+
+    uvicorn.run("chat:app", host=host, port=port, reload=reload)

@@ -27,7 +27,7 @@ protobuf.load('./proto/sparray.proto').then((root: any) => {
     }
 
     uploadClipElement.addEventListener('change', clipUpload, false);
-    let socket = new WebSocket("ws://localhost:8000/ws_tunnel");
+    let socket = new WebSocket("ws://0.0.0.0:8000/ws_tunnel");
     socket.binaryType = 'arraybuffer';
 
     socket.onmessage = async (event: MessageEvent) => {

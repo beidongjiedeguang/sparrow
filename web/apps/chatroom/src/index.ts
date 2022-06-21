@@ -1,6 +1,13 @@
 import * as protobuf from 'protobufjs';
 
-let socket = new WebSocket("ws://localhost:8000/ws_chat");
+const local = true;
+let websocket_dir:string;
+if (local){
+    websocket_dir = "ws://0.0.0.0:8000/ws_chat"
+}else{
+    websocket_dir = "ws://192.168.61.230:51220/ws_chat"
+}
+let socket = new WebSocket(websocket_dir);
 socket.binaryType = 'arraybuffer'
 
 let btn = document.getElementById('btn') as HTMLElement
@@ -11,6 +18,7 @@ const contextUserName = document.getElementById('uName') as any;
 let ChatProto: any;
 
 func2()
+
 uploadClipElement.addEventListener('change', clipUpload, false);
 
 function clipUpload() {
@@ -83,14 +91,14 @@ function func2() {
         // new_message.time = date.getTime() / 1000;
         chatRoom!.innerHTML += `<div>${new_message.name}: ${new_message.msg} </div>`;
         console.log(new_message.buffer.length);
-        // if (new_message.buffer.length !== 0){
-        //     let imgEle = document.createElement('img');
-        //     const url = arraybuffer2base64(new_message.buffer);
-        //     imgEle.src = 'data:image/png;base64,'+url;
-        //     imgEle.height = 200
+        if (new_message.buffer.length !== 0){
+            let imgEle = document.createElement('img');
+            const url = arraybuffer2base64(new_message.buffer);
+            imgEle.src = 'data:image/png;base64,'+url;
+            imgEle.height = 200
 
-        //     chatRoom!.appendChild(imgEle);
-        // }
+            chatRoom!.appendChild(imgEle);
+        }
     };
 
     socket.onclose = function (event: CloseEvent) {
