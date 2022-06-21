@@ -75,8 +75,8 @@ if __name__ == "__main__":
         port = 8000
         reload = True
     else:
-        host = "192.168.61.230"
-        port = 51220
+        host = "0.0.0.0"
+        port = 8080
         reload = False
 
     uvicorn.run("chat:app", host=host, port=port, reload=reload)

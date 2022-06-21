@@ -15,7 +15,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rsparray.proto\x12\x07sparray\x1a\x1cgoogle/protobuf/struct.proto\"A\n\x11\x44\x65nseNdArrayProto\x12\x0e\n\x06\x62uffer\x18\x01 \x01(\x0c\x12\r\n\x05shape\x18\x02 \x03(\r\x12\r\n\x05\x64type\x18\x03 \x01(\t\"C\n\x08\x44ocProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0e\n\x06\x62uffer\x18\x02 \x01(\x0c\x12\x0c\n\x04text\x18\x03 \x01(\t\x12\r\n\x05\x64type\x18\x04 \x01(\t\"0\n\rDocArrayProto\x12\x1f\n\x04\x64ocs\x18\x01 \x03(\x0b\x32\x11.sparray.DocProto\"E\n\tChatProto\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\x0e\n\x06\x62uffer\x18\x03 \x01(\x0c\x12\r\n\x05\x64type\x18\x04 \x01(\tb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rsparray.proto\x12\x07sparray\x1a\x1cgoogle/protobuf/struct.proto\"A\n\x11\x44\x65nseNdArrayProto\x12\x0e\n\x06\x62uffer\x18\x01 \x01(\x0c\x12\r\n\x05shape\x18\x02 \x03(\r\x12\r\n\x05\x64type\x18\x03 \x01(\t\"C\n\x08\x44ocProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0e\n\x06\x62uffer\x18\x02 \x01(\x0c\x12\x0c\n\x04text\x18\x03 \x01(\t\x12\r\n\x05\x64type\x18\x04 \x01(\t\"0\n\rDocArrayProto\x12\x1f\n\x04\x64ocs\x18\x01 \x03(\x0b\x32\x11.sparray.DocProto\"f\n\tChatProto\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03msg\x18\x02 \x01(\t\x12\x0e\n\x06\x62uffer\x18\x03 \x01(\x0c\x12\r\n\x05\x64type\x18\x04 \x01(\t\x12\x1f\n\x07imgInfo\x18\x05 \x01(\x0b\x32\x0e.sparray.Image\"&\n\x05Image\x12\r\n\x05width\x18\x01 \x01(\x02\x12\x0e\n\x06height\x18\x02 \x01(\x02\x62\x06proto3')
 
 
 
@@ -23,6 +23,7 @@ _DENSENDARRAYPROTO = DESCRIPTOR.message_types_by_name['DenseNdArrayProto']
 _DOCPROTO = DESCRIPTOR.message_types_by_name['DocProto']
 _DOCARRAYPROTO = DESCRIPTOR.message_types_by_name['DocArrayProto']
 _CHATPROTO = DESCRIPTOR.message_types_by_name['ChatProto']
+_IMAGE = DESCRIPTOR.message_types_by_name['Image']
 DenseNdArrayProto = _reflection.GeneratedProtocolMessageType('DenseNdArrayProto', (_message.Message,), {
   'DESCRIPTOR' : _DENSENDARRAYPROTO,
   '__module__' : 'sparray_pb2'
@@ -51,6 +52,13 @@ ChatProto = _reflection.GeneratedProtocolMessageType('ChatProto', (_message.Mess
   })
 _sym_db.RegisterMessage(ChatProto)
 
+Image = _reflection.GeneratedProtocolMessageType('Image', (_message.Message,), {
+  'DESCRIPTOR' : _IMAGE,
+  '__module__' : 'sparray_pb2'
+  # @@protoc_insertion_point(class_scope:sparray.Image)
+  })
+_sym_db.RegisterMessage(Image)
+
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
@@ -61,5 +69,7 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _DOCARRAYPROTO._serialized_start=192
   _DOCARRAYPROTO._serialized_end=240
   _CHATPROTO._serialized_start=242
-  _CHATPROTO._serialized_end=311
+  _CHATPROTO._serialized_end=344
+  _IMAGE._serialized_start=346
+  _IMAGE._serialized_end=384
 # @@protoc_insertion_point(module_scope)

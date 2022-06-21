@@ -45,4 +45,9 @@ message ChatProto {
   string msg = 2;
   bytes buffer = 3;
   string dtype = 4;
+  Image imgInfo = 5;
+}
+message Image {
+  float width=1;
+  float height=2;
 }
