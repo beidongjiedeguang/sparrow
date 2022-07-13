@@ -6,6 +6,8 @@ AUTHORS
 
 .idea
 .vscode/
+./logs/
+./out/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
